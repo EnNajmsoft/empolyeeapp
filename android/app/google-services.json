@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "654496325104",
+    "project_id": "sttafservice",
+    "storage_bucket": "sttafservice.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:654496325104:android:5bd2c8fbd5ad12c8bbd135",
+        "android_client_info": {
+          "package_name": "com.example.empolyeeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhF_44CmjNZhz0VmSYH2DffbloL9OXoSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
