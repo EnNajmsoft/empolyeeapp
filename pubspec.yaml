@@ -37,6 +37,7 @@ dependencies:
   firebase_storage: ^11.5.3
   firebase_auth: ^4.15.0
   pin_code_fields: ^7.3.0
+  flutter_ringtone_player: ^3.2.0
 
 dev_dependencies:
   flutter_test:

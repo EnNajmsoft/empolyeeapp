@@ -12,117 +12,114 @@ import 'package:empolyeeapp/screen/Hr/vacation/itemvacation.dart';
 
 class EmpVacationView extends StatelessWidget {
   final EmpvacatcontrollerImp controller = Get.put(EmpvacatcontrollerImp());
-
+List<String> notifications = [
+    'Notification 1',
+    'Notification 2',
+    'Notification 3',
+    // ... يمكنك إضافة المزيد من الإشعارات حسب الحاجة
+  ];
   @override
   Widget build(BuildContext context) {
     return
-    // return Scaffold(
+        // return Scaffold(
 
-    //   appBar: AppBar(
-        
-    //     leading: Padding(
-    //         padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
-    //         child: Container(
-    //           width: double.infinity,
-    //           height: 100,
-             
-    //         ),
-    //       ),
-    //     title: Text("Hr Vacations"),
-    //     centerTitle: true,
-    //     backgroundColor: Colors.blue, // تخصيص لون الخلفية
-    //     actions: [
-    //       PopupMenuButton<String>(
-    //         onSelected: (value) {
-    //           controller.filterData(value);
-    //         },
-    //         itemBuilder: (BuildContext context) => [
-    //           PopupMenuItem<String>(
-    //             value: '0',
-    //             child: Text('Pending'),
-    //           ),
-    //           PopupMenuItem<String>(
-    //             value: '1',
-    //             child: Text('Approved'),
-    //           ),
-    //           PopupMenuItem<String>(
-    //             value: '2',
-    //             child: Text('Rejected'),
-    //           ),
-    //           PopupMenuItem<String>(
-    //             value: 'all',
-    //             child: Text('All'),
-    //           ),
-    //         ],
-    //       ),
-    //     ],
-    //   ),
-    //     drawer: Drawer(
-    //     child: Padding(
-    //       padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),
-    //       child: Column(
-    //         children: [
-    //           ListTile(
-    //             title: Text("Official Vacations"),
-    //             leading: Icon(Icons.home),
-    //             onTap: () {
-    //               // Handle navigation or action
-    //             },
-    //           ),
-    //           ListTile(
-    //             title: Text("الاجازات "),
-    //             leading: Icon(Icons.local_fire_department),
-    //             onTap: () {
-    //               Get.toNamed(AppRoutes.vacationtpyeview);
-    //             },
-    //           ),
-    //           ListTile(
-    //             title: Text("الاقسام "),
-    //             leading: Icon(Icons.local_fire_department),
-    //             onTap: () {
-    //               Get.toNamed(AppRoutes.departementview);
-    //             },
-    //           ),
-    //           ListTile(
-    //             title: Text("المستخدمين"),
-    //             leading: Icon(Icons.local_fire_department),
-    //             onTap: () {
-    //               Get.toNamed(AppRoutes.departementview);
-    //             },
-    //           ),
-    //           // Add more ListTile items as needed
-    //         ],
-    //       ),
-    //     ),
-    //   ),
+        //   appBar: AppBar(
+
+        //     leading: Padding(
+        //         padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+        //         child: Container(
+        //           width: double.infinity,
+        //           height: 100,
+
+        //         ),
+        //       ),
+        //     title: Text("Hr Vacations"),
+        //     centerTitle: true,
+        //     backgroundColor: Colors.blue, // تخصيص لون الخلفية
+        //     actions: [
+        //       PopupMenuButton<String>(
+        //         onSelected: (value) {
+        //           controller.filterData(value);
+        //         },
+        //         itemBuilder: (BuildContext context) => [
+        //           PopupMenuItem<String>(
+        //             value: '0',
+        //             child: Text('Pending'),
+        //           ),
+        //           PopupMenuItem<String>(
+        //             value: '1',
+        //             child: Text('Approved'),
+        //           ),
+        //           PopupMenuItem<String>(
+        //             value: '2',
+        //             child: Text('Rejected'),
+        //           ),
+        //           PopupMenuItem<String>(
+        //             value: 'all',
+        //             child: Text('All'),
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        //     drawer: Drawer(
+        //     child: Padding(
+        //       padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),
+        //       child: Column(
+        //         children: [
+        //           ListTile(
+        //             title: Text("Official Vacations"),
+        //             leading: Icon(Icons.home),
+        //             onTap: () {
+        //               // Handle navigation or action
+        //             },
+        //           ),
+        //           ListTile(
+        //             title: Text("الاجازات "),
+        //             leading: Icon(Icons.local_fire_department),
+        //             onTap: () {
+        //               Get.toNamed(AppRoutes.vacationtpyeview);
+        //             },
+        //           ),
+        //           ListTile(
+        //             title: Text("الاقسام "),
+        //             leading: Icon(Icons.local_fire_department),
+        //             onTap: () {
+        //               Get.toNamed(AppRoutes.departementview);
+        //             },
+        //           ),
+        //           ListTile(
+        //             title: Text("المستخدمين"),
+        //             leading: Icon(Icons.local_fire_department),
+        //             onTap: () {
+        //               Get.toNamed(AppRoutes.departementview);
+        //             },
+        //           ),
+        //           // Add more ListTile items as needed
+        //         ],
+        //       ),
+        //     ),
+        //   ),
         Scaffold(
       appBar: AppBar(
-        title: Text("admin Vacations"),
+        title: Text("hr Vacations"),
         centerTitle: true,
         backgroundColor: Colors.blue, // تخصيص لون الخلفية
         actions: [
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              controller.filterData(value);
+           PopupMenuButton<String>(
+            icon: Icon(Icons.notifications),
+            onSelected: (String notification) {
+              // تنفيذ العمليات المرتبطة بفتح الإشعار المحدد
+              print('Selected notification: $notification');
             },
-            itemBuilder: (BuildContext context) => [
-              PopupMenuItem<String>(
-                value: '0',
-                child: Text('Pending'),
-              ),
-              PopupMenuItem<String>(
-                value: '1',
-                child: Text('Approved'),
-              ),
-              PopupMenuItem<String>(
-                value: '2',
-                child: Text('Rejected'),
-              ),
-              PopupMenuItem<String>(
-                value: 'all',
-                child: Text('All'),
-              ),
-            ],
+            itemBuilder: (BuildContext context) {
+              return notifications.map((String notification) {
+                return PopupMenuItem<String>(
+                  value: notification,
+                  child: Text(notification),
+                );
+              }).toList();
+            },
           ),
         ],
       ),
@@ -142,10 +139,10 @@ class EmpVacationView extends StatelessWidget {
                 title: Text("الاجازات "),
                 leading: Icon(Icons.local_fire_department),
                 onTap: () {
-                 Get.toNamed(AppRoutes.vacationtpyeview);
+                  Get.toNamed(AppRoutes.vacationtpyeview);
                 },
               ),
-               ListTile(
+              ListTile(
                 title: Text("الاقسام "),
                 leading: Icon(Icons.local_fire_department),
                 onTap: () {
@@ -156,10 +153,10 @@ class EmpVacationView extends StatelessWidget {
                 title: Text("المستخدمين"),
                 leading: Icon(Icons.local_fire_department),
                 onTap: () {
-                  Get.toNamed(AppRoutes.departementview);
+                  Get.toNamed(AppRoutes.viewwituser);
                 },
               ),
-                 ListTile(
+              ListTile(
                 title: Text("jop"),
                 leading: Icon(Icons.local_fire_department),
                 onTap: () {
@@ -198,11 +195,32 @@ class EmpVacationView extends StatelessWidget {
                         },
                       ),
                     ),
-                    IconButton(
-                      icon: Icon(Icons.filter_list),
-                      onPressed: () {
-                        // Open the filter interface here
+                    PopupMenuButton<String>(
+               
+            icon: Icon(Icons.filter_1_outlined),
+          
+          
+                      onSelected: (value) {
+                        controller.filterData(value);
                       },
+                      itemBuilder: (BuildContext context) => [
+                        PopupMenuItem<String>(
+                          value: '0',
+                          child: Text('Pending'),
+                        ),
+                        PopupMenuItem<String>(
+                          value: '1',
+                          child: Text('Approved'),
+                        ),
+                        PopupMenuItem<String>(
+                          value: '2',
+                          child: Text('Rejected'),
+                        ),
+                        PopupMenuItem<String>(
+                          value: 'all',
+                          child: Text('All'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -291,7 +309,6 @@ class vacationBottomsheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-  
             Padding(
                 padding: getPadding(top: 26),
                 child: Text("Cancel Booking",
@@ -336,35 +353,31 @@ class vacationBottomsheet extends StatelessWidget {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
-
-                        child: empvacation.vacationStateHr == "2"
+                    child: empvacation.vacationStateHr == "2"
                         ? Text("مرفض")
                         : CustomButton(
-                        height: getVerticalSize(58),
-                        text: "رفض",
-                        margin: getMargin(right: 6),
-                        variant: ButtonVariant.FillGray800,
-                        onTap: () {
-                          controller.rejectvac(empvacation.empVacationId);
-                           Get.back();
-                                             }),
+                            height: getVerticalSize(58),
+                            text: "رفض",
+                            margin: getMargin(right: 6),
+                            variant: ButtonVariant.FillGray800,
+                            onTap: () {
+                              controller.rejectvac(empvacation.empVacationId);
+                              Get.back();
+                            }),
                   ),
                   Expanded(
-                  
-                       child: empvacation.vacationStateHr == "1"
-                          ? Text("مقبول")
-                          :  CustomButton(
-                          height: getVerticalSize(58),
-                          text: "قبول",
-                          margin: getMargin(left: 6),
-                          variant: ButtonVariant.OutlineGreenA7003f,
-                          onTap: () {
-                            controller.approvalvac(empvacation.empVacationId);
+                    child: empvacation.vacationStateHr == "1"
+                        ? Text("مقبول")
+                        : CustomButton(
+                            height: getVerticalSize(58),
+                            text: "قبول",
+                            margin: getMargin(left: 6),
+                            variant: ButtonVariant.OutlineGreenA7003f,
+                            onTap: () {
+                              controller.approvalvac(empvacation.empVacationId);
                               Get.back();
-
-                          
-                          }),
-                    )
+                            }),
+                  )
                 ]))
           ],
         ),
@@ -545,7 +558,6 @@ class vacationBottomsheet extends StatelessWidget {
 //     );
 //   }
 // }
-
 
 // 2
 // import 'package:flutter/material.dart';
@@ -769,7 +781,6 @@ class vacationBottomsheet extends StatelessWidget {
 //   }
 // }
 
-
 // import 'package:empolyeeapp/controller/hr/empvacation/empvacatcontroller.dart';
 // import 'package:empolyeeapp/core/app_export.dart';
 // import 'package:empolyeeapp/core/functions/alertelogoteadmin.dart';
@@ -802,7 +813,7 @@ class vacationBottomsheet extends StatelessWidget {
 //                   title: Text("الاجازت لرسميه"),
 //                   leading: Icon(Icons.home),
 //                   onTap: () {
-                    
+
 //                   },
 //                 ),
 //               ],
@@ -829,7 +840,7 @@ class vacationBottomsheet extends StatelessWidget {
 //                       return  InkWell(child: ListitemnameItemWidget(itemvacation: controller.empvact[index],),onTap: () {
 //                         Get.bottomSheet(CancelBookingBottomsheet(empvacation: controller.empvact[index],));
 //                       },);
-                   
+
 //                     }),
 //               ),
 //             ),

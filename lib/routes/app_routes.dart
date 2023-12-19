@@ -2,6 +2,7 @@
 import 'package:empolyeeapp/screen/Hr/Department/AddDeparScreen.dart';
 import 'package:empolyeeapp/screen/Hr/Department/ViewDepartment.dart';
 import 'package:empolyeeapp/screen/Hr/EmployeeScreen/employeeScreen.dart';
+import 'package:empolyeeapp/screen/Hr/user/viewUserScreen.dart';
 import 'package:empolyeeapp/screen/Hr/vacation/empvacationview.dart';
 import 'package:empolyeeapp/screen/Hr/vacation/onevacation.dart';
 import 'package:empolyeeapp/screen/Hr/jop/addJopScreen.dart';
@@ -9,8 +10,12 @@ import 'package:empolyeeapp/screen/Hr/jop/viewJopScreen.dart';
 import 'package:empolyeeapp/screen/Hr/vacationType/addVacationType.dart';
 import 'package:empolyeeapp/screen/Hr/vacationType/viewVacationType.dart';
 import 'package:empolyeeapp/screen/admin/vacationsScreen/vacationsScreen.dart';
+import 'package:empolyeeapp/screen/create_new_password_screen/create_new_password_screen.dart';
 import 'package:empolyeeapp/screen/empolyee/addvacation.dart';
 import 'package:empolyeeapp/screen/empolyee/homescreen.dart';
+import 'package:empolyeeapp/screen/forgot_password_filled_type_screen/forgot_password_filled_type_screen.dart';
+import 'package:empolyeeapp/screen/forgot_password_screen/forgot_password_screen.dart';
+import 'package:empolyeeapp/screen/forgot_password_type_otp_screen/forgot_password_type_otp_screen.dart';
 import 'package:empolyeeapp/screen/sign_up_blank_screen/verifycodesingup.dart';
 import 'package:empolyeeapp/screen/splash_screen/binding/splash_binding.dart';
 import 'package:empolyeeapp/screen/splash_screen/splash_screen.dart';
@@ -87,6 +92,7 @@ class AppRoutes {
   static const String employeedepview= '/employeedepview';
   static const String jopview= '/jopview';
   static const String addjop= '/addjop';
+  static const String viewwituser= '/viewwituser';
 
 
   //============== admin ========//
@@ -125,6 +131,7 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.employeedepview, page: () => EmployeeScreen()),
   GetPage(name: AppRoutes.jopview, page: () => ViewJopScreen()),
   GetPage(name: AppRoutes.addjop, page: () => AddDJopScreen()),
+  GetPage(name: AppRoutes.viewwituser, page: () => UserScreen()),
   
   
   
@@ -166,12 +173,12 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.signInScreen, page: () => SignInScreen(), middlewares: [MyMiddleWare()],),
   GetPage(name: AppRoutes.fillProfileScreen, page: () => FillProfileScreen()),
 
-  // GetPage(name: AppRoutes.forgotPasswordScreen, page: () => ForgotPasswordScreen()),
-  // GetPage(name: AppRoutes.forgotPasswordTypeOtpScreen, page: () => ForgotPasswordTypeOtpScreen()),
-  // GetPage(name: AppRoutes.forgotPasswordFilledTypeScreen, page: () => ForgotPasswordFilledTypeScreen()),
-  // GetPage(
-  //     name: AppRoutes.createNewPasswordScreen,
-  //     page: () => CreateNewPasswordScreen()),
+  GetPage(name: AppRoutes.forgotPasswordScreen, page: () => ForgotPasswordScreen()),
+  GetPage(name: AppRoutes.forgotPasswordTypeOtpScreen, page: () => ForgotPasswordTypeOtpScreen()),
+  GetPage(name: AppRoutes.forgotPasswordFilledTypeScreen, page: () => ForgotPasswordFilledTypeScreen()),
+  GetPage(
+      name: AppRoutes.createNewPasswordScreen,
+      page: () => CreateNewPasswordScreen()),
 
 
 ];

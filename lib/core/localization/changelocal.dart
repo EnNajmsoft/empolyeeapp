@@ -1,3 +1,4 @@
+import 'package:empolyeeapp/core/functions/fcmconfig.dart';
 import 'package:empolyeeapp/core/services/services.dart';
 import 'package:flutter/material.dart';
 // import 'package:geolocator/geolocator.dart';
@@ -41,8 +42,8 @@ class LocaleController extends GetxController {
 
   @override
   void onInit() { 
-    // requestPermissionNotification() ; 
-    // fcmconfig();
+    requestPermissionNotification() ; 
+    fcmconfig();
     // requestPerLocation();
     String? sharedPrefLang = myServices.sharedPreferences.getString("lang");
     if (sharedPrefLang == "ar") {

@@ -4,6 +4,7 @@ class UserModel {
   String? userEmail;
   String? userPassw;
   String? userPhone;
+  String? userToken;
   String? userJopId;
   String? userVerficycod;
   String? userType;
@@ -26,6 +27,7 @@ class UserModel {
       this.userEmail,
       this.userPassw,
       this.userPhone,
+      this.userToken,
       this.userJopId,
       this.userVerficycod,
       this.userType,
@@ -48,6 +50,7 @@ class UserModel {
     userEmail = json['userEmail'];
     userPassw = json['userPassw'];
     userPhone = json['userPhone'];
+    userToken = json['userToken'];
     userJopId = json['userJopId'];
     userVerficycod = json['userVerficycod'];
     userType = json['userType'];
@@ -72,6 +75,7 @@ class UserModel {
     data['userEmail'] = this.userEmail;
     data['userPassw'] = this.userPassw;
     data['userPhone'] = this.userPhone;
+    data['userToken'] = this.userToken;
     data['userJopId'] = this.userJopId;
     data['userVerficycod'] = this.userVerficycod;
     data['userType'] = this.userType;

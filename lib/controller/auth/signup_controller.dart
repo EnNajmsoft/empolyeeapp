@@ -58,9 +58,9 @@ class SignUpControllerImp extends SignUpController {
 
       if (StatusRequest.success == statusRequest) {
         if (response['status'] == "success") {
-          // Get.toNamed(AppRoutes.virifycodesingupScreen,
-          //     arguments: {"email": email.text});
-          Get.toNamed(AppRoutes.signInScreen);
+          Get.toNamed(AppRoutes.virifycodesingupScreen,
+              arguments: {"email": email.text});
+          // Get.toNamed(AppRoutes.signInScreen);
           print(
               "==================================================$response============================");
 

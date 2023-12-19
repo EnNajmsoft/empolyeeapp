@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:empolyeeapp/core/class/statusrequest.dart';
 import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
 import 'package:empolyeeapp/core/services/services.dart';
@@ -7,6 +9,7 @@ import 'package:empolyeeapp/data/model/vacationtype.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 abstract class EmpvacAddcontroller extends GetxController {
   addvacationt();
@@ -87,7 +90,42 @@ class EmpvacAddcontrollerImp extends EmpvacAddcontroller {
     update();
   }
 
+sendnaficatin($title ,$masae) async {
+var headersList = {
+ 
+ 'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
+ 'Content-Type': 'application/json',
+ 'Authorization': 'key=AAAAmGMFXfA:APA91bEN5banIXvynyFtbQc8aO-FQk4yHdwCMWx-IwR3GY2G1C2XQRy0CFetioy-E9_DPMLiCp9grlzbNYC_3igMY5HGkvH-iuN4B9hKOmMkeey0KgbgH9pwTwPjTYya9SNFJn3rrS4V' 
+};
+var url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
+var body = {
+    "to": "/topics/users",
+    "notification": {
+      "title": $title,
+      "body": $masae,
+      "mutable_content": true,
+      "sound": "Tri-tone"
+      }
+
+   
+};
+
+var req = http.Request('POST', url);
+req.headers.addAll(headersList);
+req.body = json.encode(body);
+
+
+var res = await req.send();
+final resBody = await res.stream.bytesToString();
+
+if (res.statusCode >= 200 && res.statusCode < 300) {
+  print(resBody);
+}
+else {
+  print(res.reasonPhrase);
+}
+}
 
   @override
   void onInit() {

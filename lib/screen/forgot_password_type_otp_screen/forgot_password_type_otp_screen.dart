@@ -1,18 +1,13 @@
-import 'package:empolyeeapp/controller/auth/verfiycodesignup_controller.dart';
-import 'package:empolyeeapp/core/utils/color_constant.dart';
-import 'package:empolyeeapp/core/utils/size_utils.dart';
-import 'package:empolyeeapp/theme/app_style.dart';
+import 'package:empolyeeapp/core/app_export.dart';
+import 'package:empolyeeapp/widgets/app_bar/appbar_image.dart';
 import 'package:empolyeeapp/widgets/app_bar/appbar_title.dart';
 import 'package:empolyeeapp/widgets/app_bar/custom_app_bar.dart';
 import 'package:empolyeeapp/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-
-class VirifycodeSingupScreen extends StatelessWidget {
-  VerifyCodeSignUpControllerImp controller = Get.put(VerifyCodeSignUpControllerImp());
+class ForgotPasswordTypeOtpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,9 +17,16 @@ class VirifycodeSingupScreen extends StatelessWidget {
             appBar: CustomAppBar(
                 height: getVerticalSize(52),
                 leadingWidth: 52,
-               
+                leading: AppbarImage(
+                    height: getSize(28),
+                    width: getSize(28),
+                    svgPath: ImageConstant.imgArrowleft,
+                    margin: getMargin(left: 24, top: 11, bottom: 13),
+                    onTap: () {
+                      onTapArrowleft2(context);
+                    }),
                 title: AppbarTitle(
-                    text: "التحقق من الايميل ", margin: getMargin(left: 16))),
+                    text: "Forgot Password", margin: getMargin(left: 16))),
             body: Container(
                 width: double.maxFinite,
                 padding: getPadding(left: 34, right: 34),
@@ -42,7 +44,6 @@ class VirifycodeSingupScreen extends StatelessWidget {
                       Padding(
                           padding: getPadding(top: 60),
                           child: PinCodeTextField(
-                              controller: controller.verifycode,
                               appContext: context,
                               length: 4,
                               obscureText: false,
@@ -53,9 +54,6 @@ class VirifycodeSingupScreen extends StatelessWidget {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
-                              onSubmitted: (String verificationCode) {
-                                // controller.goToResetPassword(verificationCode);
-                              },
                               onChanged: (value) {},
                               textStyle: TextStyle(
                                   color: ColorConstant.whiteA700,
@@ -87,7 +85,7 @@ class VirifycodeSingupScreen extends StatelessWidget {
                                         fontWeight: FontWeight.w400,
                                         letterSpacing: getHorizontalSize(0.2))),
                                 TextSpan(
-                                    text: "53",
+                                    text: "55",
                                     style: TextStyle(
                                         color: ColorConstant.cyan60001,
                                         fontSize: getFontSize(16),
@@ -109,13 +107,17 @@ class VirifycodeSingupScreen extends StatelessWidget {
                 height: getVerticalSize(55),
                 text: "Verify",
                 margin: getMargin(left: 24, right: 24, bottom: 48),
-                variant: ButtonVariant.OutlineGreenA7003f,
+                variant: ButtonVariant.FillCyan600,
                 onTap: () {
-                  controller.goToSuccessSignUp(controller.verifycode.text);
+                  onTapVerify(context);
                 })));
   }
 
-  onTapArrowleft3(BuildContext context) {
+  onTapVerify(BuildContext context) {
+    Navigator.pushNamed(context, AppRoutes.forgotPasswordFilledTypeScreen);
+  }
+
+  onTapArrowleft2(BuildContext context) {
     Navigator.pop(context);
   }
 }

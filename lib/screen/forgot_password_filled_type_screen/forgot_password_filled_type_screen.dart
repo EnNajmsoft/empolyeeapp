@@ -1,7 +1,6 @@
-import 'package:empolyeeapp/controller/auth/verfiycodesignup_controller.dart';
-import 'package:empolyeeapp/core/utils/color_constant.dart';
-import 'package:empolyeeapp/core/utils/size_utils.dart';
-import 'package:empolyeeapp/theme/app_style.dart';
+import 'package:empolyeeapp/controller/forgetpassword/verifycode_controller.dart';
+import 'package:empolyeeapp/core/app_export.dart';
+import 'package:empolyeeapp/widgets/app_bar/appbar_image.dart';
 import 'package:empolyeeapp/widgets/app_bar/appbar_title.dart';
 import 'package:empolyeeapp/widgets/app_bar/custom_app_bar.dart';
 import 'package:empolyeeapp/widgets/custom_button.dart';
@@ -10,9 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-
-class VirifycodeSingupScreen extends StatelessWidget {
-  VerifyCodeSignUpControllerImp controller = Get.put(VerifyCodeSignUpControllerImp());
+class ForgotPasswordFilledTypeScreen extends StatelessWidget {
+  VerifyCodeControllerImp controller = Get.put(VerifyCodeControllerImp());
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -22,9 +20,16 @@ class VirifycodeSingupScreen extends StatelessWidget {
             appBar: CustomAppBar(
                 height: getVerticalSize(52),
                 leadingWidth: 52,
-               
+                leading: AppbarImage(
+                    height: getSize(28),
+                    width: getSize(28),
+                    svgPath: ImageConstant.imgArrowleft,
+                    margin: getMargin(left: 24, top: 11, bottom: 13),
+                    onTap: () {
+                      onTapArrowleft3(context);
+                    }),
                 title: AppbarTitle(
-                    text: "التحقق من الايميل ", margin: getMargin(left: 16))),
+                    text: "Forgot Password", margin: getMargin(left: 16))),
             body: Container(
                 width: double.maxFinite,
                 padding: getPadding(left: 34, right: 34),
@@ -53,9 +58,9 @@ class VirifycodeSingupScreen extends StatelessWidget {
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly
                               ],
-                              onSubmitted: (String verificationCode) {
-                                // controller.goToResetPassword(verificationCode);
-                              },
+                              // onSubmitted: (String verificationCode) {
+                              //   controller.goToResetPassword(verificationCode);
+                              // },
                               onChanged: (value) {},
                               textStyle: TextStyle(
                                   color: ColorConstant.whiteA700,
@@ -111,9 +116,12 @@ class VirifycodeSingupScreen extends StatelessWidget {
                 margin: getMargin(left: 24, right: 24, bottom: 48),
                 variant: ButtonVariant.OutlineGreenA7003f,
                 onTap: () {
-                  controller.goToSuccessSignUp(controller.verifycode.text);
+                                controller.goToResetPassword(controller.verifycode.text);
+                            
                 })));
   }
+
+
 
   onTapArrowleft3(BuildContext context) {
     Navigator.pop(context);

@@ -10,7 +10,13 @@ class AppLink {
   // static const String loginadmin = "$server/auth/loginadmin.php";
   static const String verifycodessignup = "$server/auth/verfiycode.php";
   static const String resend = "$server/auth/resend.php";
+// ================================= ForgetPassword ========================== //
 
+  static const String checkEmail = "$server/forgetpassword/checkemail.php";
+  static const String resetPassword =
+      "$server/forgetpassword/resetpassword.php";
+  static const String verifycodeforgetpassword =
+      "$server/forgetpassword/verifycode.php";
 // ================================= Admin ========================== //
 
 // ================================= empolyee ========================== //
@@ -33,6 +39,10 @@ class AppLink {
 
   static const String userview = "$server/user/viewall.php";
   static const String userviewdep = "$server/user/viewdep.php";
+  static const String viewwituser = "$server/user/viewWitUser.php";
+  static const String approvaluser = "$server/hr/approvaluser.php";
+  static const String rejectuser = "$server/hr/rejectuser.php";
+
 
 
   static const String jopviewall = "$server/jop/viewall.php";

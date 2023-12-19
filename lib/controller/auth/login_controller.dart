@@ -59,7 +59,7 @@ class LoginControllerImp extends LoginController {
           } else if (response['data']['userApproval'] == "2") {
             Get.defaultDialog(
                 title: " حالة رفض", middleText: " تم رفض هذا المستخدم ");
-          } else{
+          } else if (response['data']['userApproval'] == "3") {
 
             myServices.sharedPreferences
                 .setString("id", response['data']['userId']);
@@ -77,15 +77,21 @@ class LoginControllerImp extends LoginController {
 
             if (response['data']['userType'] == "0") {
               myServices.sharedPreferences.setString("step", "2");
+              FirebaseMessaging.instance.subscribeToTopic("user");
               Get.offAllNamed(AppRoutes.emphome);
             } else if (response['data']['userType'] == "1") {
               myServices.sharedPreferences.setString("step", "3");
+              FirebaseMessaging.instance.subscribeToTopic("admin");
               Get.offAllNamed(AppRoutes.empvacationdepview);
             } else if (response['data']['userType'] == "2") {
               myServices.sharedPreferences.setString("step", "4");
+              FirebaseMessaging.instance.subscribeToTopic("HR");
               Get.offAllNamed(AppRoutes.empvacationview);
             } else {}
 
+          }else{
+             Get.defaultDialog(title: "1".tr, middleText: "3".tr);
+            statusRequest = StatusRequest.failure;
           }
 
 
@@ -111,48 +117,6 @@ class LoginControllerImp extends LoginController {
     } else {}
   }
 
-  @override
-  // loginadmin() async {
-  //   if (formstatelogin.currentState!.validate()) {
-  //     statusRequest = StatusRequest.loading;
-  //     update();
-  //     var response = await loginData.postadmindata(email.text, password.text);
-  //     print("=============================== Controller $response ");
-  //     statusRequest = handlingData(response);
-  //     if (StatusRequest.success == statusRequest) {
-  //       if (response['status'] == "success") {
-  //         // data.addAll(response['data']);
-  //         // if (response['data']['users_approve'] == "1") {
-  //         myServices.sharedPreferences
-  //             .setString("adminid", response['data']['owner_id']);
-  //         String adminid = myServices.sharedPreferences.getString("adminid")!;
-  //         myServices.sharedPreferences
-  //             .setString("adminname", response['data']['owner_name']);
-  //         myServices.sharedPreferences
-  //             .setString("userlastname", response['data']['owner_last_name']);
-  //         myServices.sharedPreferences
-  //             .setString("email", response['data']['owner_email']);
-  //         myServices.sharedPreferences
-  //             .setString("phone", response['data']['owner_phone']);
-
-  //         //           Firebase.initializeApp();
-  //         // FirebaseMessaging.instance.subscribeToTopic("users");
-
-  //         myServices.sharedPreferences.setString("step", "3");
-  //         Get.offAllNamed(AppRoutes.hotelScreenAdmin);
-
-  //         // } else {
-  //         //   // Get.toNamed(AppRoutes.verfiyCodeSignUp,
-  //         //   //     arguments: {"email": email.text});
-  //         // }
-  //       } else {
-  //         Get.defaultDialog(title: "1".tr, middleText: "3".tr);
-  //         statusRequest = StatusRequest.failure;
-  //       }
-  //     }
-  //     update();
-  //   } else {}
-  // }
 
   @override
   goToSignUp() {
