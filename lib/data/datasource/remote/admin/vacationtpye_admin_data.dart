@@ -9,16 +9,6 @@ class AdminvacationtData {
   AdminvacationtData(this.crud);
 
 
-  addvacationtdata(
-    String vacationname,
-    String vacationnote,
-  ) async {
-    var response = await crud.postData(AppLink.vacationtadd, {
-      "vacation_name": vacationname,
-      "vacation_note": vacationnote,
-    });
-    return response.fold((l) => l, (r) => r);
-  } 
   
   //////rrr
   getempvacData() async {

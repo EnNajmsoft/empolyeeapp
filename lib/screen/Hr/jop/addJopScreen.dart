@@ -13,62 +13,46 @@ class AddDJopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0), // ارتفاع الـ AppBar هنا
-
-        child: AppBar(
-                backgroundColor: Color.fromARGB(255, 227, 231, 234),
-
-          flexibleSpace: FlexibleSpaceBar(
-            background: Container(
-
-              decoration: BoxDecoration(
-                borderRadius:BorderRadius.vertical(top: Radius.zero,bottom: Radius.circular(40)),
-                gradient: LinearGradient(
-                  colors: [Color(0xFF1C88B6), Color(0xFFE19691)],
-                  stops: [0, 1],
-                  begin: AlignmentDirectional(0.03, -1),
-                  end: AlignmentDirectional(-0.03, 1),
-                ),
-              ),
-            ),
-          ),
-          title: Text("إضافة قسم جديد"),
-        ),
+     appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(70.0),
+        child: CustomAppBar( titleapbar: 'jop',),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: controller.formStateAddJop,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _buildInputField(
-                controller: controller.jopName,
-                label: 'اسم الوظيفة',
-                hint: 'أدخل اسم الوظيفة',
-              ),
-              SizedBox(height: 16),
-              _buildInputField(
-                controller: controller.jopdepart,
-                label: 'مدير',
-                hint: 'حدد المدير',
-                readOnly: true,
-                onTap: () => _showDepartmentsMenu(context),
-                suffixIcon: Icons.arrow_drop_down,
-              ),
-              SizedBox(height: 16),
-              _buildInputField(
-                controller: controller.jopNote,
-                label: 'ملاحظة حول الوظيفة',
-                hint: 'أدخل ملاحظة',
-              ),
-              SizedBox(height: 24),
-              _buildElevatedButton(
-                onPressed: () => controller.addJop(),
-                label: 'إضافة',
-              ),
-            ],
+      body: Container(
+padding: EdgeInsets.only(top: 50),
+        child: Padding(
+          padding: EdgeInsets.all(26.0),
+          child: Form(
+            key: controller.formStateAddJop,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildInputField(
+                  controller: controller.jopName,
+                  label: 'اسم الوظيفة',
+                  hint: 'أدخل اسم الوظيفة',
+                ),
+                SizedBox(height: 16),
+                _buildInputField(
+                  controller: controller.jopdepart,
+                  label: 'القسم ',
+                  hint: 'حدد القسم',
+                  readOnly: true,
+                  onTap: () => _showDepartmentsMenu(context),
+                  suffixIcon: Icons.arrow_drop_down,
+                ),
+                SizedBox(height: 16),
+                _buildInputField(
+                  controller: controller.jopNote,
+                  label: 'ملاحظة حول الوظيفة',
+                  hint: 'أدخل ملاحظة',
+                ),
+                SizedBox(height: 24),
+                _buildElevatedButton(
+                  onPressed: () => controller.addJop(),
+                  label: 'إضافة',
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -90,7 +74,7 @@ class AddDJopScreen extends StatelessWidget {
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,
-        labelStyle: TextStyle(color: Colors.red),
+        labelStyle: TextStyle(color: Color(0xFF2697B0)),
         border: OutlineInputBorder(),
         suffixIcon: suffixIcon != null
             ? InkWell(
@@ -120,23 +104,30 @@ class AddDJopScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 200,
+          height: 300,
           child: ListView.builder(
             itemCount: controller.departements.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(controller.departements[index].departName!),
-                onTap: () {
-                  controller.departements.first =
-                      controller.departements[index];
-                  controller.jopdepart.text =
-                      controller.departements[index].departName!;
-                  controller.departid =
-                      controller.departements[index].departId!;
-                  print(controller.jopdepart.text);
-                  print(controller.departid);
-                  Navigator.pop(context);
-                },
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(' قسم  : ' "${controller.departements[index].departName!}"),
+                     subtitle:  Text(' مدير القسم  : '
+                        "${controller.departements[index].userUsername!}"),
+                    onTap: () {
+                      controller.departements.first =
+                          controller.departements[index];
+                      controller.jopdepart.text =
+                          controller.departements[index].departName!;
+                      controller.departid =
+                          controller.departements[index].departId!;
+                      print(controller.jopdepart.text);
+                      print(controller.departid);
+                      Navigator.pop(context);
+                    },
+                  ),
+                  const Divider(),
+                ],
               );
             },
           ),
@@ -145,6 +136,40 @@ class AddDJopScreen extends StatelessWidget {
     );
   }
 }
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String titleapbar;
+  const CustomAppBar({super.key, required this.titleapbar});
+
+  @override
+  Size get preferredSize => Size.fromHeight(50.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+            top: Radius.zero, bottom: Radius.circular(40)),
+      ),
+      flexibleSpace: FlexibleSpaceBar(
+        background: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+                top: Radius.zero, bottom: Radius.circular(40)),
+            gradient: LinearGradient(
+              colors: [Color.fromARGB(255, 112, 218, 236), Color.fromARGB(255, 2, 142, 149)],
+              stops: [0, 1],
+              begin: AlignmentDirectional(0.03, -1),
+              end: AlignmentDirectional(-0.03, 1),
+            ),
+          ),
+        ),
+      ),
+      title: Text("$titleapbar"),
+      centerTitle: true,
+    );
+  }
+}
+
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:empolyeeapp/controller/hr/jop/addJopController.dart';

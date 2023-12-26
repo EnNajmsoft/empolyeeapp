@@ -17,7 +17,6 @@ abstract class EmpvacAddcontroller extends GetxController {
 }
 
 class EmpvacAddcontrollerImp extends EmpvacAddcontroller {
-
   MyServices myServices = Get.find();
   EmpuservacationtData empvacatData = EmpuservacationtData(Get.find());
   AdminvacationtData vacationtype = AdminvacationtData(Get.find());
@@ -25,47 +24,46 @@ class EmpvacAddcontrollerImp extends EmpvacAddcontroller {
   StatusRequest statusRequest = StatusRequest.none;
   List<VacationTypeModel>? vacatype = [];
 
-  String? empidvacation ;
+  String? empidvacation;
+  String? departid;
+  String? departmanger;
   String? empvacationtypeid;
-  
+
   late TextEditingController empvacationtype;
   late TextEditingController empvacationstart;
   late TextEditingController empvacationend;
   late TextEditingController empvacationnote;
   late TextEditingController empvacationfile;
 
-
   @override
   addvacationt() async {
     if (formstateaddvactmp.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
-      print( empvacationtypeid);
-      print( empidvacation);
-      print( empvacationstart.text);
-      print( empvacationend.text);
+      print(empvacationtypeid);
+      print(empidvacation);
+      print(empvacationstart.text);
+      print(empvacationend.text);
       print(empvacationnote.text);
       print(empvacationfile.text);
 
       update();
       var response = await empvacatData.addemployeevac(
-       empvacationtypeid,
+        empvacationtypeid,
         empidvacation,
         empvacationstart.text,
         empvacationend.text,
         empvacationnote.text,
         empvacationfile.text,
+        departid,
+        departmanger
       );
       statusRequest = StatusRequest.success;
       if (response['status'] == "success") {
         Get.offAllNamed(AppRoutes.emphome);
-      } else {
-
-      }
+      } else {}
     }
     update();
   }
-
-
 
   @override
   getvacationtype() async {
@@ -79,10 +77,9 @@ class EmpvacAddcontrollerImp extends EmpvacAddcontroller {
       if (response['status'] == "success") {
         List responsedata = response['data'];
 
-     
-          vacatype!.clear();
-          vacatype!.addAll(responsedata.map((e) => VacationTypeModel.fromJson(e)));
-        
+        vacatype!.clear();
+        vacatype!
+            .addAll(responsedata.map((e) => VacationTypeModel.fromJson(e)));
       } else {
         statusRequest = StatusRequest.failure;
       }
@@ -90,53 +87,53 @@ class EmpvacAddcontrollerImp extends EmpvacAddcontroller {
     update();
   }
 
-sendnaficatin($title ,$masae) async {
-var headersList = {
- 
- 'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
- 'Content-Type': 'application/json',
- 'Authorization': 'key=AAAAmGMFXfA:APA91bEN5banIXvynyFtbQc8aO-FQk4yHdwCMWx-IwR3GY2G1C2XQRy0CFetioy-E9_DPMLiCp9grlzbNYC_3igMY5HGkvH-iuN4B9hKOmMkeey0KgbgH9pwTwPjTYya9SNFJn3rrS4V' 
-};
-var url = Uri.parse('https://fcm.googleapis.com/fcm/send');
+// sendnaficatin($title ,$masae) async {
+// var headersList = {
 
-var body = {
-    "to": "/topics/users",
-    "notification": {
-      "title": $title,
-      "body": $masae,
-      "mutable_content": true,
-      "sound": "Tri-tone"
-      }
+//  'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
+//  'Content-Type': 'application/json',
+//  'Authorization': 'key=AAAAmGMFXfA:APA91bEN5banIXvynyFtbQc8aO-FQk4yHdwCMWx-IwR3GY2G1C2XQRy0CFetioy-E9_DPMLiCp9grlzbNYC_3igMY5HGkvH-iuN4B9hKOmMkeey0KgbgH9pwTwPjTYya9SNFJn3rrS4V'
+// };
+// var url = Uri.parse('https://fcm.googleapis.com/fcm/send');
 
-   
-};
+// var body = {
+//     "to": "/topics/users",
+//     "notification": {
+//       "title": $title,
+//       "body": $masae,
+//       "mutable_content": true,
+//       "sound": "Tri-tone"
+//       }
 
-var req = http.Request('POST', url);
-req.headers.addAll(headersList);
-req.body = json.encode(body);
+// };
 
+// var req = http.Request('POST', url);
+// req.headers.addAll(headersList);
+// req.body = json.encode(body);
 
-var res = await req.send();
-final resBody = await res.stream.bytesToString();
+// var res = await req.send();
+// final resBody = await res.stream.bytesToString();
 
-if (res.statusCode >= 200 && res.statusCode < 300) {
-  print(resBody);
-}
-else {
-  print(res.reasonPhrase);
-}
-}
+// if (res.statusCode >= 200 && res.statusCode < 300) {
+//   print(resBody);
+// }
+// else {
+//   print(res.reasonPhrase);
+// }
+// }
 
   @override
   void onInit() {
-        empidvacation = myServices.sharedPreferences.getString("id");
-   
-        empvacationtype = TextEditingController();
-        empvacationstart = TextEditingController();
-        empvacationend = TextEditingController();
-        empvacationnote = TextEditingController();
-        empvacationfile = TextEditingController();
-  getvacationtype();
+    empidvacation = myServices.sharedPreferences.getString("id");
+    departid = myServices.sharedPreferences.getString("departId");
+    departmanger = myServices.sharedPreferences.getString("departManger");
+    
+     empvacationtype = TextEditingController();
+    empvacationstart = TextEditingController();
+    empvacationend = TextEditingController();
+    empvacationnote = TextEditingController();
+    empvacationfile = TextEditingController();
+    getvacationtype();
     super.onInit();
   }
 }

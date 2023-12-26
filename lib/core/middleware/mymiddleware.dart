@@ -20,8 +20,11 @@ class MyMiddleWare extends GetMiddleware {
       return const RouteSettings(name: AppRoutes.empvacationdepview);
     } else if (myServices.sharedPreferences.getString("step") == "4") {
       return const RouteSettings(name: AppRoutes.empvacationview);
+    }else {
+    return null;
+
     }
 
-    return null;
+   
   }
 }

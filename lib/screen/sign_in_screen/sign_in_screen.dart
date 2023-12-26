@@ -105,6 +105,13 @@ class SignInScreen extends StatelessWidget {
                     CustomButton(
                         onTap: () {
                           controller.login();
+                          print('==============================');
+                           print(controller.email.text);
+                          print('==============================');
+                           print(controller.password.text);
+
+                          print('==============================');
+                          print('==============================');
                         },
                         height: getVerticalSize(55),
                         text: "Sign in",

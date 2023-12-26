@@ -22,4 +22,21 @@ class DepartementData {
     });
     return response.fold((l) => l, (r) => r);
   }
+
+  editDepartementData(
+    
+    String departmentid,
+    String departname,
+    String departmanger,
+    String departnote,
+  ) async {
+    var response = await crud.postData(AppLink.departmentedite, {
+      
+      "departmentid": departmentid,
+      "departname": departname,
+      "departmanger": departmanger,
+      "departnote": departnote,
+    });
+    return response.fold((l) => l, (r) => r);
+  }
 }

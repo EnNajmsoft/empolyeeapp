@@ -3,11 +3,9 @@ import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
 import 'package:country_pickers/country.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/JopData.dart';
 import 'package:empolyeeapp/data/model/JopModel.dart';
-// import 'package:empolyeeapp/data/datasource/remote/auth/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-
 import '../../data/datasource/remote/auth/signup.dart';
 import '../../routes/app_routes.dart';
 
@@ -29,7 +27,7 @@ class SignUpControllerImp extends SignUpController {
   late TextEditingController password;
   late Country selectedCountry;
   late String? token;
-  late String? jopselect;
+  late String? jopselect ='1';
 
   List<String> dropdownItemList = ["maile", "fimail"];
   bool isshowpassword = true;
@@ -114,30 +112,24 @@ class SignUpControllerImp extends SignUpController {
   }
 
   geytoken() async {
-    token = await FirebaseMessaging.instance.getToken();
-    print('=======================================');
-    print('$token');
+    // token = await FirebaseMessaging.instance.getToken();
+    // print('=======================================');
+    // print('$token');
   }
 
   @override
   void onInit() {
     viewJoop();
     geytoken();
-    username = TextEditingController();
+    username     = TextEditingController();
     userlastname = TextEditingController();
-    email = TextEditingController();
-    phone = TextEditingController();
-    jopid = TextEditingController();
-    password = TextEditingController();
+    email        = TextEditingController();
+    phone        = TextEditingController();
+    jopid        = TextEditingController();
+    password     = TextEditingController();
 
     super.onInit();
   }
 
-  void dispose() {
-    username.dispose();
-    // email.dispose();
-    phone.dispose();
-    // password.dispose();
-    super.dispose();
-  }
+
 }

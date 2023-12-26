@@ -1,27 +1,28 @@
-
-
 import 'package:empolyeeapp/core/class/statusrequest.dart';
 import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
+import 'package:empolyeeapp/core/services/services.dart';
 import 'package:empolyeeapp/data/datasource/remote/admin/vacationtpye_admin_data.dart';
 import 'package:empolyeeapp/data/model/empvacation.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
 
 abstract class AdminVacationController extends GetxController {
   getEmpVacDep();
   filterData(String valu);
-  approvalvac(empVacationId);
-  rejectvac(empVacationId);
-  getempvacationtOne(empId);
+  approvalVac(empVacationId);
+  rejectVac(empVacationId);
+  getEmpVactOne(empId);
   onInit();
 }
 
 class AdminVacationControllerImp extends AdminVacationController {
-  AdminvacationtData empvacatData = AdminvacationtData(Get.find());
 
+  MyServices myServices = Get.find();
+  AdminvacationtData empvacatData = AdminvacationtData(Get.find());
   StatusRequest statusRequest = StatusRequest.none;
-String departid = "1";
+ 
+
+  String? departid;
   List<EmpVacationModel> empVacations = [];
   List<EmpVacationModel> empvactall = [];
   List<EmpVacationModel> empvacwait = [];
@@ -30,6 +31,7 @@ String departid = "1";
   List<EmpVacationModel> empvactone = [];
 
 
+  @override
   getEmpVacDep() async {
     statusRequest = StatusRequest.loading;
     var response = await empvacatData.getEmpVacDeparData(departid);
@@ -40,9 +42,7 @@ String departid = "1";
         empvactall = response['data']
             .map<EmpVacationModel>((e) => EmpVacationModel.fromJson(e))
             .toList();
-
         empVacations = empvactall; // Initial assignment
-
         empvacwait = empvactall
             .where((element) => element.vacationStateAdmin == "0")
             .toList();
@@ -83,33 +83,33 @@ String departid = "1";
   }
 
   @override
-  approvalvac(empVacationId) async {
+  approvalVac(empVacationId) async {
     statusRequest = StatusRequest.loading;
     update();
     var response = await empvacatData.aprroAdminvacation(empVacationId);
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
-      // empvactaprov.removeWhere((element) => element.empVacationId = empVacationId);
-      print('chang ssssssssss');
-      filterData("2");
+      empvactanjc
+          .removeWhere((element) => element.empVacationId == empVacationId);
+      print('chang  ssssssssss approvalvac');
+      getEmpVacDep();
     } else {}
-
     update();
   }
 
   @override
-  rejectvac(empVacationId) async {
+  rejectVac(empVacationId) async {
     statusRequest = StatusRequest.loading;
     update();
     var response = await empvacatData.rejectAdminvacation(empVacationId);
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
-      filterData("1");
-      // empvactaprov.removeWhere((element) => element.empVacationId = empVacationId);
+      empvactaprov
+          .removeWhere((element) => element.empVacationId == empVacationId);
       update();
-      print('chang ssssssssss');
+      print('chang ssssssssss rejectvac');
+      getEmpVacDep();
     } else {}
-
     update();
   }
 
@@ -118,7 +118,7 @@ String departid = "1";
   }
 
   @override
-  getempvacationtOne(empId) async {
+  getEmpVactOne(empId) async {
     statusRequest = StatusRequest.loading;
     var response = await empvacatData.getempvacDataOne(empId);
     print("=============================== va   one============= $response ");
@@ -138,84 +138,10 @@ String departid = "1";
 
   @override
   void onInit() {
+    departid = myServices.sharedPreferences.getString("departId");
+    print("==============================departId");
+    print("==============================$departid");
     getEmpVacDep();
-
     super.onInit();
   }
 }
-
-
-// import 'package:empolyeeapp/core/class/statusrequest.dart';
-// import 'package:empolyeeapp/data/datasource/remote/hr/DepartementData.dart';
-// import 'package:empolyeeapp/data/datasource/remote/hr/UserData.dart';
-// import 'package:empolyeeapp/data/model/DepartementModel.dart';
-// import 'package:empolyeeapp/data/model/usermodel.dart';
-// import 'package:get/get.dart';
-
-// abstract class AdminVacationController extends GetxController {
-//   viewAllUser();
-//   viewUserDepart();
-//   initialData();
-// }
-
-// class AdminVacationControllerImp extends AdminVacationController {
-//   UserData userData = UserData(Get.find());
-//   List<UserModel> allusers = [];
-//   List<UserModel> depusers = [];
-//   DepartementModel? departement;
-//   String? departid;
-//   StatusRequest statusRequest = StatusRequest.none;
-
-//   @override
-//   viewAllUser() async {
-//     statusRequest = StatusRequest.loading;
-//     update();
-//     var response = await userData.getAllUserData();
-//     statusRequest = StatusRequest.success;
-//     if (response['status'] == "success") {
-//       print('======================$response================');
-//       List responsedata = response['data'];
-//       allusers.clear();
-//       allusers.addAll(responsedata.map((e) => UserModel.fromJson(e)));
-//     } else {
-//       statusRequest = StatusRequest.failure;
-//     }
-
-//     update();
-//   }
-
-//   @override
-//   viewUserDepart() async {
-//     statusRequest = StatusRequest.loading;
-//     update();
-//     var response = await userData.getDeparUserData(departid);
-//     statusRequest = StatusRequest.success;
-//     if (response['status'] == "success") {
-//       print('======================$response================');
-//       List responsedata = response['data'];
-//       depusers.clear();
-//       depusers.addAll(responsedata.map((e) => UserModel.fromJson(e)));
-//     } else {
-//       print('=====================errrrrrrrrr================');
-
-//       statusRequest = StatusRequest.failure;
-//     }
-
-//     update();
-//   }
-
-//   @override
-//   @override
-//   initialData() {
-//     departement = Get.arguments['departement'];
-//     departid = departement!.departId!;
-//   }
-
-//   @override
-//   void onInit() {
-//     initialData();
-//     viewAllUser();
-//     viewUserDepart();
-//     super.onInit();
-//   }
-// }

@@ -1,6 +1,7 @@
 import 'package:empolyeeapp/core/class/statusrequest.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/vacationtype.dart';
 import 'package:empolyeeapp/data/model/vacationtype.dart';
+import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:get/get.dart';
 
 abstract class VeiwVacTepycontroller extends GetxController {
@@ -35,7 +36,10 @@ class VeiwVacTepycontrollerImp extends VeiwVacTepycontroller {
     
     update();
   }
-
+  goToEditVacatype(VacationTypeModel vacaTypMolde) {
+    Get.offNamed(AppRoutes.editvacationtTypescreen,
+        arguments: {"vacaTypMolde": vacaTypMolde});
+  }
   @override
   void onInit() {
    viewVacationtTepy();

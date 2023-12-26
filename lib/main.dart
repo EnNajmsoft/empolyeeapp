@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // initialRoute: AppRoutes.addvacationtscreen,
       initialBinding: InitialBindings(),
-      // initialRoute: AppRoutes.departementview,
+      // initialRoute: AppRoutes.empvacationview,
       // initialRoute: AppRoutes.empvacationdepview,
-      initialRoute: AppRoutes.signUpBlankScreen,
-      // initialRoute: AppRoutes.initialRoute,
+      // initialRoute: AppRoutes.signUpBlankScreen,
+      initialRoute: AppRoutes.signInScreen,
       getPages: routes,
     );
   }

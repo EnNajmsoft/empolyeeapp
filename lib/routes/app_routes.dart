@@ -1,5 +1,6 @@
 
 import 'package:empolyeeapp/screen/Hr/Department/AddDeparScreen.dart';
+import 'package:empolyeeapp/screen/Hr/Department/EditDepartmentScreen.dart';
 import 'package:empolyeeapp/screen/Hr/Department/ViewDepartment.dart';
 import 'package:empolyeeapp/screen/Hr/EmployeeScreen/employeeScreen.dart';
 import 'package:empolyeeapp/screen/Hr/user/viewUserScreen.dart';
@@ -8,7 +9,9 @@ import 'package:empolyeeapp/screen/Hr/vacation/onevacation.dart';
 import 'package:empolyeeapp/screen/Hr/jop/addJopScreen.dart';
 import 'package:empolyeeapp/screen/Hr/jop/viewJopScreen.dart';
 import 'package:empolyeeapp/screen/Hr/vacationType/addVacationType.dart';
+import 'package:empolyeeapp/screen/Hr/vacationType/editevacationScreen.dart';
 import 'package:empolyeeapp/screen/Hr/vacationType/viewVacationType.dart';
+import 'package:empolyeeapp/screen/admin/oneVacationScreen.dart';
 import 'package:empolyeeapp/screen/admin/vacationsScreen/vacationsScreen.dart';
 import 'package:empolyeeapp/screen/create_new_password_screen/create_new_password_screen.dart';
 import 'package:empolyeeapp/screen/empolyee/addvacation.dart';
@@ -16,6 +19,7 @@ import 'package:empolyeeapp/screen/empolyee/homescreen.dart';
 import 'package:empolyeeapp/screen/forgot_password_filled_type_screen/forgot_password_filled_type_screen.dart';
 import 'package:empolyeeapp/screen/forgot_password_screen/forgot_password_screen.dart';
 import 'package:empolyeeapp/screen/forgot_password_type_otp_screen/forgot_password_type_otp_screen.dart';
+import 'package:empolyeeapp/screen/settings.dart';
 import 'package:empolyeeapp/screen/sign_up_blank_screen/verifycodesingup.dart';
 import 'package:empolyeeapp/screen/splash_screen/binding/splash_binding.dart';
 import 'package:empolyeeapp/screen/splash_screen/splash_screen.dart';
@@ -81,14 +85,22 @@ class AppRoutes {
   static const String editProfileScreen = '/edit_profile_screen';
 
 
+  static const String settings = '/settings';
+
+
 
   static const String initialRoute = '/initialRoute';
 
   //============== hr ========//
   static const String onevacation = '/onevacation';
   static const String vacationtpyeview = '/vacationtpyeview';
+  static const String addvacationtTypescreen = '/add_vacationtTypescreen';
+  static const String editvacationtTypescreen = '/edit_vacationtTypescreen';
+
   static const String departementview = '/departementview';
   static const String addepartscreen = '/addepartscreen';
+  static const String editedepartscreen = '/editedepartscreen';
+  
   static const String employeedepview= '/employeedepview';
   static const String jopview= '/jopview';
   static const String addjop= '/addjop';
@@ -99,7 +111,6 @@ class AppRoutes {
   
 
   static const String empvacationview = '/Empvacationview';
-  static const String addvacationtscreen = '/add_vacationtscreen';
 
   static const String empvacationdepview = '/empvacationdepview';
 
@@ -124,10 +135,15 @@ List<GetPage<dynamic>>? routes = [
   // ],
   //=============================== hr =========================
   GetPage(name: AppRoutes.empvacationview, page: () => EmpVacationView()),
-  GetPage(name: AppRoutes.onevacation, page: () =>  Onevacation()),
+  // GetPage(name: AppRoutes.onevacation, page: () =>  oneVacationScreen()),
   GetPage(name: AppRoutes.departementview, page: () =>  DepartementView()),
   GetPage(name: AppRoutes.addepartscreen, page: () =>  AddDepartScreen()),
+  GetPage(name: AppRoutes.editedepartscreen, page: () =>  EditeDepartScreen()),
+  
   GetPage(name: AppRoutes.vacationtpyeview, page: () => VacationTpyeView()),
+  GetPage(name: AppRoutes.addvacationtTypescreen, page: () => AddVacationTypeScreen()), 
+  GetPage(name: AppRoutes.editvacationtTypescreen, page: () => editVacationTypeScreen()),
+
   GetPage(name: AppRoutes.employeedepview, page: () => EmployeeScreen()),
   GetPage(name: AppRoutes.jopview, page: () => ViewJopScreen()),
   GetPage(name: AppRoutes.addjop, page: () => AddDJopScreen()),
@@ -146,7 +162,7 @@ List<GetPage<dynamic>>? routes = [
 
 
 
-   GetPage( name: "/", page: () =>  SplashScreen(), middlewares: [MyMiddleWare()],  bindings: [SplashBinding()],),
+  //  GetPage( name: "/", page: () =>  SplashScreen(), middlewares: [MyMiddleWare()],  bindings: [SplashBinding()],),
   // GetPage(name: AppRoutes.languageScreen, page: () => const LanguageScreen()),
   // GetPage(
   //   name: AppRoutes.welcomeScreen,
@@ -165,7 +181,6 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoutes.testscren, page: () => testscren()),
   // GetPage(name: AppRoutes.testchat, page: () => TestChat(itemvacation: null,)),
   
-  GetPage(name: AppRoutes.addvacationtscreen, page: () => AddVacationScreen()),
 //  Auth
   // GetPage(name: AppRoutes.signUpBlankScreen, page: () => SignUpBlankScreen()),
 
@@ -179,6 +194,9 @@ List<GetPage<dynamic>>? routes = [
   GetPage(
       name: AppRoutes.createNewPasswordScreen,
       page: () => CreateNewPasswordScreen()),
+  GetPage(
+      name: AppRoutes.settings,
+      page: () => Settings()),
 
 
 ];

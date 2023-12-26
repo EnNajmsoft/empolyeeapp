@@ -36,11 +36,14 @@ class VeiwDepartcontrollerImp extends VeiwDepartcontroller {
 
     update();
   }
-
+  goToEditDepart(DepartementModel departModel) {
+    Get.toNamed(AppRoutes.editedepartscreen,
+        arguments: {"departModel": departModel});
+  }
   
-  gotoEmployeeDepart(DepartementModel departement) {
+  gotoEmployeeDepart( departementid) {
     Get.toNamed(AppRoutes.employeedepview,
-        arguments: {"departement": departement});
+        arguments: {"departement": departementid});
   }
 
   void onInit() {

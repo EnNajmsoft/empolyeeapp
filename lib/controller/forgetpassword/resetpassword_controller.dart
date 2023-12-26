@@ -50,7 +50,7 @@ class ResetPasswordControllerImp extends ResetPasswordController {
             insetPadding: EdgeInsets.only(left: 0),
           );
 
-          Get.offNamed(AppRoutes.signInScreen);
+          Get.offAllNamed(AppRoutes.signInScreen);
         } else {
           Get.defaultDialog(title: "1".tr, middleText: "7".tr);
           statusRequest = StatusRequest.failure;

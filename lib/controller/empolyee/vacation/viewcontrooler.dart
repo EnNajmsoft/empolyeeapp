@@ -73,7 +73,6 @@
 //   }
 // }
 
-
 import 'package:empolyeeapp/core/class/statusrequest.dart';
 import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
 import 'package:empolyeeapp/core/services/services.dart';
@@ -81,21 +80,20 @@ import 'package:empolyeeapp/data/datasource/remote/admin/vacationtpye_admin_data
 import 'package:empolyeeapp/data/model/empvacation.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
 
 abstract class Empusercontroller extends GetxController {
   getempvacationt();
   filterData(String valu);
+  refrehVacation();
 
-   getempvacationtOne(empId);
-  onInit();
+  getempvacationtOne(empId);
 }
 
 class EmpusercontrollerImp extends Empusercontroller {
   AdminvacationtData empvacatData = AdminvacationtData(Get.find());
 
   StatusRequest statusRequest = StatusRequest.none;
-MyServices myServices = Get.find();
+  MyServices myServices = Get.find();
 
   List<EmpVacationModel> empVacations = [];
   List<EmpVacationModel> empvactall = [];
@@ -104,9 +102,9 @@ MyServices myServices = Get.find();
   List<EmpVacationModel> empvactanjc = [];
   List<EmpVacationModel> empvactone = [];
 
-
-String? username;
-String? userid;
+  String? username;
+  String? userid;
+  @override
   getempvacationt() async {
     statusRequest = StatusRequest.loading;
     var response = await empvacatData.getempvacuserData(userid);
@@ -158,7 +156,7 @@ String? userid;
 
     update();
   }
-  
+
   gotoVacation(EmpVacationModel vacation) {
     Get.toNamed(AppRoutes.onevacation, arguments: {"vacationmodel": vacation});
   }
@@ -171,10 +169,10 @@ String? userid;
     statusRequest = handlingData(response);
     if (StatusRequest.success == statusRequest) {
       if (response['status'] == "success") {
-      List responsedata = response['data'];
+        List responsedata = response['data'];
         empvactone.clear();
-        empvactone.addAll(responsedata.map((e) => EmpVacationModel.fromJson(e)));
-
+        empvactone
+            .addAll(responsedata.map((e) => EmpVacationModel.fromJson(e)));
       } else {
         statusRequest = StatusRequest.failure;
       }
@@ -182,19 +180,28 @@ String? userid;
     update();
   }
 
+   
+  @override
+  refrehVacation() {
+    getempvacationt();
+  }
+
   @override
   void onInit() {
-     username = myServices.sharedPreferences.getString("username");
-userid = myServices.sharedPreferences.getString("id");
-    print("======================================================");
+    username = myServices.sharedPreferences.getString("username");
+    userid = myServices.sharedPreferences.getString("id");
+    print("==========================userid============================");
+    print(userid);
+    print("==========================step============================");
 
-print(myServices.sharedPreferences.getString("step"));
-    print("======================================================");
+    print(myServices.sharedPreferences.getString("step"));
+    print("==========================userType============================");
     print(myServices.sharedPreferences.getString("userType"));
+    // FirebaseMessaging.instance.subscribeToTopic("user$userid");
+
     getempvacationt();
 
     super.onInit();
   }
+ 
 }
-
-

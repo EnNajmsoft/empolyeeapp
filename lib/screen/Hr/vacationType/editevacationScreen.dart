@@ -1,28 +1,24 @@
-
-
-import 'package:empolyeeapp/controller/hr/vacationeType/addController.dart';
-import 'package:empolyeeapp/widgets/custom_button.dart';
+import 'package:empolyeeapp/controller/hr/vacationeType/editVacaTypeCantroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class editVacationTypeScreen extends StatelessWidget {
+  final EditVacationTypecontrollerImp controller = Get.put(EditVacationTypecontrollerImp());
 
-class AddVacationTypeScreen extends StatelessWidget {
-  final AddVacationTypecontrollerImp controller = Get.put(AddVacationTypecontrollerImp());
-
-  AddVacationTypeScreen();
-
-
+  editVacationTypeScreen();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-     appBar: const PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70.0),
-        child: CustomAppBar( titleapbar: 'اضافة نوع اجازه ',),
+        child: CustomAppBar(
+          titleapbar: 'تعدي نوع اجازه ',
+        ),
       ),
       body: Container(
-padding: EdgeInsets.only(top: 50),
+        padding: EdgeInsets.only(top: 50),
         child: Padding(
           padding: EdgeInsets.all(26.0),
           child: Form(
@@ -33,19 +29,18 @@ padding: EdgeInsets.only(top: 50),
                 _buildInputField(
                   controller: controller.vacationname,
                   label: 'اسم نوع الإجازة',
-                  hint: 'أدخل اسم الإجازة',
+                  hint: ' ${controller.vacationname}',
                 ),
-            
                 SizedBox(height: 16),
                 _buildInputField(
                   controller: controller.vacationnote,
                   label: 'ملاحظة حول الإجازة',
-                  hint: 'أدخل ملاحظة',
+                  hint: ' ${controller.vacationnote}',
                 ),
                 SizedBox(height: 24),
                 _buildElevatedButton(
-                  onPressed: () => controller.addVacationtType(),
-                  label: 'إضافة',
+                  onPressed: () => controller.editVacationtType(),
+                  label: 'تعدي',
                 ),
               ],
             ),
@@ -94,8 +89,6 @@ padding: EdgeInsets.only(top: 50),
       child: Container(child: Text(label)),
     );
   }
-
-
 }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -118,7 +111,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.vertical(
                 top: Radius.zero, bottom: Radius.circular(40)),
             gradient: LinearGradient(
-              colors: [Color.fromARGB(255, 112, 218, 236), Color.fromARGB(255, 2, 142, 149)],
+              colors: [
+                Color.fromARGB(255, 112, 218, 236),
+                Color.fromARGB(255, 2, 142, 149)
+              ],
               stops: [0, 1],
               begin: AlignmentDirectional(0.03, -1),
               end: AlignmentDirectional(-0.03, 1),
@@ -131,7 +127,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
-
 
 
 

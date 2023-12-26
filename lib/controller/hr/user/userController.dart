@@ -49,7 +49,7 @@ class HRUserControllerImp extends HRUserController {
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
       witUsers.removeWhere((element) => element.userId == userid);
-      print('chang ssssssssss');
+      print('chang ssssssssss approvaluser');
     } else {
             print('chang error');
 
@@ -68,7 +68,7 @@ class HRUserControllerImp extends HRUserController {
      
       witUsers.removeWhere((element) => element.userId == userid);
       update();
-      print('chang ssssssssss');
+      print('chang ssssssssss rejectuser');
     } else {
             print('chang error');
 
@@ -77,9 +77,7 @@ class HRUserControllerImp extends HRUserController {
     update();
   }
 
-  gotoVacation(EmpVacationModel vacation) {
-    Get.toNamed(AppRoutes.onevacation, arguments: {"vacationmodel": vacation});
-  }
+ 
 
   // @override
   // getempvacationtOne(empId) async {

@@ -11,15 +11,27 @@ class HrVacationtType {
     return response.fold((l) => l, (r) => r);
   }
   
-  addVacationtType(
+  addvacationtTypedata(
     String vacationname,
     String vacationnote,
   ) async {
-    var response = await crud.postData(AppLink.vacationtadd, {
+    var response = await crud.postData(AppLink.vacationttypeadd, {
       "vacation_name": vacationname,
       "vacation_note": vacationnote,
     });
     return response.fold((l) => l, (r) => r);
   }
 
+  editvacationtTypedata(
+    String vacationid,
+    String vacationname,
+    String vacationnote,
+  ) async {
+    var response = await crud.postData(AppLink.vacationtypeedit, {
+      "vacation_id": vacationid,
+      "vacation_name": vacationname,
+      "vacation_note": vacationnote,
+    });
+    return response.fold((l) => l, (r) => r);
+  } 
 }

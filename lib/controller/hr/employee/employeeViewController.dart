@@ -42,9 +42,7 @@ DepartementModel? departement;
   viewUserDepart() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response = await userData.getDeparUserData(
-departid
-    );
+    var response = await userData.getDeparUserData(departid);
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
       print('======================$response================');
@@ -64,8 +62,8 @@ departid
 
   @override
   initialData() {
-  
-departid = myServices.sharedPreferences.getString("departId");
+  departid = Get.arguments['departement'];
+// departid = myServices.sharedPreferences.getString("departId");
   }
 
   @override

@@ -116,6 +116,7 @@
 //     );
 //   }
 // }
+
 import 'package:empolyeeapp/data/model/empvacation.dart';
 import 'package:flutter/material.dart';
 
@@ -142,7 +143,9 @@ class TestChat extends StatelessWidget {
               'حالة الإجازة',
               itemVacation.vacationStateHr == '0'
                   ? 'قيد المراجعة'
-                  : 'تمت الموافقة',
+                  : itemVacation.vacationStateHr == '1'
+                  ? 'تمت الموافقة'
+                  : 'تمت الرفض'
             ),
             _buildInfoCard('ملاحظات', itemVacation.vacationNote),
             _buildInfoCard('ملف الإجازة', itemVacation.vacationFile),

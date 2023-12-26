@@ -10,6 +10,7 @@ abstract class VerifyCodeSignUpController extends GetxController {
 }
 
 class VerifyCodeSignUpControllerImp extends VerifyCodeSignUpController {
+  
   VerfiyCodeSignUpData verfiyCodeSignUpData = VerfiyCodeSignUpData(Get.find());
  
   String? email;

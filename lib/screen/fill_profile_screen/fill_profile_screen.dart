@@ -244,7 +244,7 @@ class FillProfileScreen extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.vertical(bottom: Radius.zero ,top: Radius.circular(50)),
             gradient: LinearGradient(
-              colors: [Color(0xFF1C88B6), Color(0xFFE19691)],
+              colors: [Color.fromARGB(255, 26, 55, 67), Color(0xFFE19691)],
               stops: [0, 1],
               begin: AlignmentDirectional(0.03, -1),
               end: AlignmentDirectional(-0.03, 1),

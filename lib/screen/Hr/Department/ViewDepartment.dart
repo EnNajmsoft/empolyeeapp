@@ -1,9 +1,7 @@
 import 'package:empolyeeapp/controller/hr/department/viewDepartController.dart';
-import 'package:empolyeeapp/controller/hr/employee/employeeViewController.dart';
 import 'package:empolyeeapp/core/utils/size_utils.dart';
 import 'package:empolyeeapp/data/model/DepartementModel.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
-import 'package:empolyeeapp/screen/Hr/EmployeeScreen/employeeScreen.dart';
 import 'package:empolyeeapp/theme/app_decoration.dart';
 import 'package:empolyeeapp/theme/app_style.dart';
 import 'package:empolyeeapp/widgets/custom_button.dart';
@@ -22,7 +20,7 @@ class DepartementView extends StatelessWidget {
       appBar: AppBar(
         title: Text(' الاقسام'),
       ),
-       floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           Get.offNamed(AppRoutes.addepartscreen);
         },
@@ -42,19 +40,14 @@ class DepartementView extends StatelessWidget {
                         Get.bottomSheet(vacationBottomsheet(
                             department: controller.departements[index]));
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: _buildUserInfoCard(
-                            'بيانات القسم', {
-                          'depart_name': controller
-                              .departements[index].departName,
-                          'depart_manger': controller
-                              .departements[index]
-                              .departManger,
-                          'depart_note': controller
-                              .departements[index].departNote,
-                        }),
-                      ),
+                      child: _buildUserInfoCard('بيانات القسم', {
+                        'depart_name':
+                            controller.departements[index].departName,
+                        'depart_manger':
+                            controller.departements[index].userUsername,
+                        'depart_note':
+                            controller.departements[index].departNote,
+                      }),
                     );
                   }),
             ),
@@ -83,23 +76,6 @@ class vacationBottomsheet extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CustomImageView(
-                height: getVerticalSize(3),
-                width: getHorizontalSize(38)),
-            Padding(
-                padding: getPadding(top: 26),
-                child: Text("Cancel Booking",
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: AppStyle.txtRobotoRegular16)),
-            Container(
-                width: getHorizontalSize(340),
-                margin: getMargin(left: 19, top: 26, right: 19),
-                child: Text('',
-                    // "${'19'.tr} $orderid",
-                    maxLines: null,
-                    textAlign: TextAlign.center,
-                    style: AppStyle.txtUrbanistRomanBold20)),
             Container(
                 width: getHorizontalSize(372),
                 margin: getMargin(left: 3, top: 8, right: 3),
@@ -113,15 +89,24 @@ class vacationBottomsheet extends StatelessWidget {
               child:
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Expanded(
+                  child: CustomButton(
+                      height: getVerticalSize(58),
+                      text: "عرض",
+                      margin: getMargin(left: 6),
+                      variant: ButtonVariant.OutlineGreenA7003f,
+                      onTap: () {
+                        controller.gotoEmployeeDepart(department.departId);
+                      }),
+                ),
+                Expanded(
                     child: CustomButton(
                         height: getVerticalSize(58),
-                        text: "عرض",
+                        text: "تعديل",
                         margin: getMargin(left: 6),
                         variant: ButtonVariant.OutlineGreenA7003f,
                         onTap: () {
-                        
-                          controller.gotoEmployeeDepart(department);
-                        }))
+                          controller.goToEditDepart(department);
+                        }),),
               ]),
             ),
             Padding(
@@ -182,19 +167,18 @@ Widget _buildUserInfoCard(String title, Map<String, dynamic> departData) {
             ),
           ),
           Text(
-              'ملاحظة : ${departData['depart_manger']}',
-              style: TextStyle(
-                color: Colors.black87,
-              ),
+            'ملاحظة : ${departData['depart_manger']}',
+            style: TextStyle(
+              color: Colors.black87,
             ),
-            Text(
-              'ملاحظة : ${departData['depart_note']}',
-              style: TextStyle(
-                color: Colors.black87,
-              ),
+          ),
+          Text(
+            'ملاحظة : ${departData['depart_note']}',
+            style: TextStyle(
+              color: Colors.black87,
             ),
+          ),
         ],
-          
       ),
     ),
   );

@@ -1,5 +1,5 @@
 class AppLink {
-  static const String server = "http://169.254.246.73:8080/empolee_app";
+  static const String server = "http://192.168.88.43:8080/empolee_app";
 
 
 
@@ -22,7 +22,6 @@ class AppLink {
 // ================================= empolyee ========================== //
   static const String empuservacatview = "$server/empvacation/view.php";
   static const String empuservacatadd  = "$server/empvacation/add.php";
-  static const String vacationtypeview = "$server/vacaiontype/view.php";
 
 
 // ================================= hr ========================== //
@@ -32,10 +31,13 @@ class AppLink {
   static const String approvalvac = "$server/hr/approvalvac.php";
   static const String rejectvac = "$server/hr/rejectvac.php";
 
-  static const String vacationtadd = "$server/vacaiontype/add.php";
+  static const String vacationttypeadd = "$server/vacaiontype/add.php";
+  static const String vacationtypeview = "$server/vacaiontype/view.php";
+  static const String vacationtypeedit = "$server/vacaiontype/edit.php";
 
   static const String  departmentview = "$server/department/view.php";
-  static const String departmentadd = "$server/department/add.php";
+  static const String  departmentadd = "$server/department/add.php";
+  static const String  departmentedite = "$server/department/edit.php";
 
   static const String userview = "$server/user/viewall.php";
   static const String userviewdep = "$server/user/viewdep.php";

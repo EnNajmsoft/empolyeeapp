@@ -1,4 +1,5 @@
 import 'package:empolyeeapp/core/class/statusrequest.dart';
+import 'package:empolyeeapp/core/functions/alertelogoteadmin.dart';
 import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
 import 'package:empolyeeapp/data/datasource/remote/admin/vacationtpye_admin_data.dart';
 import 'package:empolyeeapp/data/model/empvacation.dart';
@@ -28,6 +29,7 @@ class EmpvacatcontrollerImp extends Empvacatcontroller {
   List<EmpVacationModel> empvactanjc = [];
   List<EmpVacationModel> empvactone = [];
 
+  @override
   getempvacationt() async {
     statusRequest = StatusRequest.loading;
     var response = await empvacatData.getempvacData();
@@ -89,6 +91,8 @@ class EmpvacatcontrollerImp extends Empvacatcontroller {
     if (response['status'] == "success") {
       empvactanjc.removeWhere((element) => element.empVacationId == empVacationId);
       print('chang ssssssssss');
+       getempvacationt();
+      
     } else {}
 
     update();
@@ -105,6 +109,7 @@ class EmpvacatcontrollerImp extends Empvacatcontroller {
           .removeWhere((element) => element.empVacationId == empVacationId);
       update();
       print('chang ssssssssss');
+        getempvacationt();
     } else {}
 
     update();
@@ -132,18 +137,20 @@ class EmpvacatcontrollerImp extends Empvacatcontroller {
     }
     update();
   }
+  
+
 geytoken()async{
- String? token= await FirebaseMessaging.instance.getToken();
+//  String? token= await FirebaseMessaging.instance.getToken();
     print('=======================================');
-    print('$token');
+    // print('$token');
 
     print('=======================================');
-    await FirebaseMessaging.instance.subscribeToTopic('users');
+    // await FirebaseMessaging.instance.subscribeToTopic('hr');
 }
   @override
   void onInit() {
-   
-    print('=======================================');
+    String username = myServices.sharedPreferences.getString("step")!;
+    print('================$username=======================');
 
     getempvacationt();
    geytoken();

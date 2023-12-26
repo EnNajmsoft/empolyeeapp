@@ -1,19 +1,22 @@
+// hotelModel   = Get.arguments['hotelModel'];
+
 import 'package:empolyeeapp/core/class/statusrequest.dart';
 import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/DepartementData.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/UserData.dart';
+import 'package:empolyeeapp/data/model/DepartementModel.dart';
 import 'package:empolyeeapp/data/model/usermodel.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 
-abstract class AddDepartcontroller extends GetxController {
-  addDepartement();
-getusersAdmin();
-  onInit();
+abstract class EditeDepartcontroller extends GetxController {
+  editeDepartement();
+  getusersAdmin();
+  initialData();
 }
 
-class AddDepartcontrollerImp extends AddDepartcontroller {
+class EditeDepartcontrollerImp extends EditeDepartcontroller {
   DepartementData departementData = DepartementData(Get.find());
   UserData userData = UserData(Get.find());
 
@@ -21,28 +24,28 @@ class AddDepartcontrollerImp extends AddDepartcontroller {
 
   StatusRequest statusRequest = StatusRequest.none;
   List<UserModel>? usersmodel = [];
-
+  DepartementModel? departmenModel;
   late TextEditingController departmentName;
   late TextEditingController departmentManger;
   late TextEditingController departmentNote;
   String? mangerId;
+  String? mangerName;
+  String? departIdargum;
+  String? departNameargum;
+  String? departNoteargum;
 
   @override
-  addDepartement() async {
+  editeDepartement() async {
     if (formStateAddDepar.currentState!.validate()) {
       statusRequest = StatusRequest.loading;
-      update();
-      var response = await departementData.addDepartementData(
-        departmentName.text,
-        // departmentManger.text,
-        mangerId!,
-        departmentNote.text
-        
+     
+        print('=========$mangerId =========');
 
-      );
+      var response = await departementData.editDepartementData(
+          departIdargum!, departmentName.text, mangerId!, departmentNote.text);
       statusRequest = StatusRequest.success;
       if (response['status'] == "success") {
-        print('=========suss add =========');
+        print('=========suss edite =========');
         Get.offNamed(AppRoutes.departementview);
       } else {}
     }
@@ -68,14 +71,25 @@ class AddDepartcontrollerImp extends AddDepartcontroller {
 
     update();
   }
-  
-  
+
+  @override
+  initialData() {
+        print('=========$mangerId =========');
+
+    departmenModel = Get.arguments['departModel'];
+    departmentName = TextEditingController();
+    departmentNote = TextEditingController();
+    departmentManger = TextEditingController();
+    departIdargum = departmenModel!.departId!;
+    mangerName = departmenModel!.userUsername;
+    departmentName.text = departmenModel!.departName!;
+    departmentNote.text = departmenModel!.departNote!;
+  }
+
   @override
   void onInit() {
-     getusersAdmin();
-    departmentName    = TextEditingController();
-    departmentNote    = TextEditingController();
-    departmentManger  = TextEditingController();
+    getusersAdmin();
+    initialData();
     super.onInit();
   }
 }

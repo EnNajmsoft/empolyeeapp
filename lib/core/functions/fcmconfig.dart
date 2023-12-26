@@ -1,3 +1,4 @@
+import 'package:empolyeeapp/controller/empolyee/vacation/viewcontrooler.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ requestPermissionNotification() async {
 }
 
 fcmconfig() {
-  print("hai =======================================================");
+  print("hai ===============================================");
   FirebaseMessaging.onMessage.listen((message) {
     print("================== Notification =================");
     print(message.notification!.title);
@@ -35,10 +36,10 @@ refreshPageNotification(data) {
   print("================== Current Route");
   print(Get.currentRoute);
 
-  if (Get.currentRoute == "/orderspending" &&
-      data['pagename'] == "refreshorderpending") {
-    // OrdersPendingController controller = Get.find();
-    // controller.refrehOrder();
+  if (Get.currentRoute == "/emp_home" &&
+      data['pagename'] == "refreshouservacation") {
+    EmpusercontrollerImp controller = Get.find();
+    controller.refrehVacation();
   }
 }
 
