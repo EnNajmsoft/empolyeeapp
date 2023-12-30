@@ -1,3 +1,4 @@
+import 'package:empolyeeapp/core/class/handlingdataview.dart';
 import 'package:empolyeeapp/screen/admin/oneVacationScreen.dart';
 import 'package:empolyeeapp/testchatgpt.dart';
 import 'package:empolyeeapp/widgets/custom_button.dart';
@@ -10,17 +11,14 @@ import 'package:empolyeeapp/controller/hr/vacations/empvacatcontroller.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
-
-
 class EmpVacationView extends StatelessWidget {
   final EmpvacatcontrollerImp controller = Get.put(EmpvacatcontrollerImp());
-List<String> notifications = [
+  List<String> notifications = [
     'Notification 1',
     'Notification 2',
     'Notification 3',
     // ... يمكنك إضافة المزيد من الإشعارات حسب الحاجة
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +30,22 @@ List<String> notifications = [
         child: CustomAppBar(),
       ),
       drawer: const CustomDrawer(),
+      //  body: Stack(
+      //   children: [
+      //     Positioned.fill(child: BackdropFilter(filter: ImageFilter.blur(
+      //       sigmaX: 5,
+      //       sigmaY: 5
+      //     ))),
+      //      Center(
+      //        child: Lottie.asset(AppImageAsset.offline,
+      //                 width: 250, height: 250),
+      //      ),
       body: GetBuilder<EmpvacatcontrollerImp>(
         builder: (controller) => WillPopScope(
           onWillPop: alertExitApp,
           child: Container(
-                    width: double.infinity,
-
-            padding: EdgeInsets.symmetric(vertical: 10 ,horizontal: 0),
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -52,7 +59,7 @@ List<String> notifications = [
                             borderSide: BorderSide(color: Colors.blue),
                           ),
                           filled: true,
-                          fillColor:ColorConstant.gray8002d,
+                          fillColor: ColorConstant.gray8002d,
                         ),
                         onChanged: (value) {
                           // Update the list when the search value changes
@@ -90,45 +97,87 @@ List<String> notifications = [
                 ),
                 const SizedBox(height: 10),
                 Expanded(
-                  child: Container(
-                    padding: EdgeInsets.fromLTRB(5, 18, 5, 0),
-                    decoration: BoxDecoration(
-                        color: Color.fromARGB(248, 244, 241, 248),
-                        borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20), bottom: Radius.zero)),
-                    child: ListView.separated(
-                      itemCount: controller.empVacations.length,
-                      separatorBuilder: (context, index) => SizedBox(height: 8),
-                      itemBuilder: (context, index) {
+                    //              body: Container(
+                    //   padding:const  EdgeInsets.all(10),
+                    //   child: GetBuilder<OrdersPendingController>(
+                    //       builder: ((controller) => HandlingDataView(statusRequest: controller.statusRequest, widget: ListView.builder(
+                    //             itemCount: controller.data.length,
+                    //             itemBuilder: ((context, index) =>
+                    //                 CardOrdersList(listdata: controller.data[index])),
+                    //           )))),
+                    // )
+                    child: Container(
+                  padding: const EdgeInsets.fromLTRB(5, 18, 5, 0),
+                  decoration: const BoxDecoration(
+                      color: Color.fromARGB(248, 244, 241, 248),
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20), bottom: Radius.zero)),
+                  child: GetBuilder<EmpvacatcontrollerImp>(
+                    builder: (controller) => HandlingDataView(
+                      statusRequest: controller.statusRequest,
+                      widget: ListView.builder(
+                        itemCount: controller.empVacations.length,
+                        itemBuilder: ((context, index) {
+                          DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                          String? startDateString =
+                              controller.empVacations[index].vacationStart;
+                          String? endDateString =
+                              controller.empVacations[index].vacationEnd;
 
-                        DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-                        String? startDateString =
-                            controller.empVacations[index].vacationStart;
-                        String? endDateString =
-                            controller.empVacations[index].vacationEnd;
+                          DateTime? startDate = startDateString != null
+                              ? DateTime.tryParse(startDateString)
+                              : null;
+                          DateTime? endDate = endDateString != null
+                              ? DateTime.tryParse(endDateString)
+                              : null;
 
-                        DateTime? startDate = startDateString != null
-                            ? DateTime.tryParse(startDateString)
-                            : null;
-                        DateTime? endDate = endDateString != null
-                            ? DateTime.tryParse(endDateString)
-                            : null;
+                          String formattedStartDate = startDate != null
+                              ? dateFormat.format(startDate)
+                              : '';
+                          String formattedEndDate =
+                              endDate != null ? dateFormat.format(endDate) : '';
+                        return  VacationCard(
+                            formattedStartDate: formattedStartDate,
+                            formattedEndDate: formattedEndDate,
+                            empVacation: controller.empVacations[index],
+                          );
+                        }),
+                      ),
 
-                        String formattedStartDate = startDate != null
-                            ? dateFormat.format(startDate)
-                            : '';
-                        String formattedEndDate =
-                            endDate != null ? dateFormat.format(endDate) : '';
+                      // ListView.separated(
+                      //   itemCount: controller.empVacations.length,
+                      //   separatorBuilder: (context, index) => SizedBox(height: 8),
+                      //   itemBuilder: (context, index) {
 
-                        return VacationCard(
-                          formattedStartDate: formattedStartDate,
-                          formattedEndDate: formattedEndDate,
-                          empVacation: controller.empVacations[index],
-                        );
-                      },
+                      //     DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+                      //     String? startDateString =
+                      //         controller.empVacations[index].vacationStart;
+                      //     String? endDateString =
+                      //         controller.empVacations[index].vacationEnd;
+
+                      //     DateTime? startDate = startDateString != null
+                      //         ? DateTime.tryParse(startDateString)
+                      //         : null;
+                      //     DateTime? endDate = endDateString != null
+                      //         ? DateTime.tryParse(endDateString)
+                      //         : null;
+
+                      //     String formattedStartDate = startDate != null
+                      //         ? dateFormat.format(startDate)
+                      //         : '';
+                      //     String formattedEndDate =
+                      //         endDate != null ? dateFormat.format(endDate) : '';
+
+                      //     return VacationCard(
+                      //       formattedStartDate: formattedStartDate,
+                      //       formattedEndDate: formattedEndDate,
+                      //       empVacation: controller.empVacations[index],
+                      //     );
+                      //   },
+                      // ),
                     ),
                   ),
-                ),
+                ))
               ],
             ),
           ),
@@ -151,135 +200,337 @@ class VacationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-     
-      shape: RoundedRectangleBorder(
-        borderRadius:
-            BorderRadius.circular(23.0), // تعديل قيمة الانحناء حسب الرغبة
-      ), // BorderRadius.all(Radius.circular(90)),
-      elevation: 2,
-      child: InkWell(
-        onTap: () {
-          Get.bottomSheet(VacationBottomSheet(empvacation: empVacation));
-        },
+// Generated code for this transaction Widget...
+    return InkWell(
+      onTap: () {
+        Get.bottomSheet(VacationBottomSheet(empvacation: empVacation));
+      },
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
         child: Container(
-           
+          // width: MediaQuery.sizeOf(context).width * 0.92,
+
+          height: 200,
+
           decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(23.0), 
-            // gradient: LinearGradient(
-            //   colors: [
-            //     Color.fromARGB(255, 187, 255, 254),
-            //     Color.fromARGB(255, 39, 78, 255)
-            //   ],
-            //   stops: [0, 1],
-            //   begin: AlignmentDirectional(0.03, -1),
-            //   end: AlignmentDirectional(-0.93, 1.5),
-            // ),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 3,
+                color: Color(0x35000000),
+                offset: Offset(0, 1),
+              )
+            ],
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Color(0xFFF1F4F8),
+              width: 1,
+            ),
           ),
+
           child: Column(
+            mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListTile(
-                  title: Row(
-                    children: [
-                      Icon(
-                        Icons.person_4,
-                        size: 40,
-                      ),
-                      Column(children: [
-                        Text(
-                          '${empVacation.userUsername}',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blue,
+                padding: EdgeInsetsDirectional.fromSTEB(4, 14, 4, 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                      child: Card(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        color: Color(0x4C4B39EF),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.person_4_sharp,
+                            color: Color(0xFF4B39EF),
+                            size: 24,
                           ),
                         ),
-                        Text(
-                          '${empVacation.jopName}/${empVacation.departName}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[600],
-                          ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${empVacation.userUsername}',
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF14181B),
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              child: Text(
+                                '${empVacation.departName}',
+                                style: TextStyle(
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  color: Color(0xFF57636C),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ]),
-                    ],
-                  ),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "From: ${formattedStartDate}",
-                        style: TextStyle(color: Colors.grey[700]),
                       ),
-                      Text(
-                        "To: ${formattedEndDate}",
-                        style: TextStyle(color: Colors.grey[700]),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            Jiffy(empVacation.departCreate, "yyyy-MM-dd")
+                                .fromNow(),
+                            textAlign: TextAlign.end,
+                            style: TextStyle(
+                              fontFamily: 'Outfit',
+                              color: Color(0xFF14181B),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  trailing:   Text(
-                    Jiffy(empVacation.departCreate, "yyyy-MM-dd").fromNow(),
-        
-                    style: TextStyle(color: Colors.grey[700]),
-                  ),
+                    ),
+                  ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.all(4),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
                   children: [
-                    Column(
-                      children: [
-                        Text(
-                          "المدير",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        empVacation.vacationStateAdmin == '0'
-                            ? Text(
-                                " في الانتظار ",
+                    Expanded(
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                              child: Text(
+                                'vacation type',
                                 style: TextStyle(
-                                    color: Color.fromARGB(255, 250, 232, 27)),
-                              )
-                            : empVacation.vacationStateAdmin == '1'
-                                ? Text(
-                                    " تمت الموافقه ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 6, 216, 37)),
-                                  )
-                                : Text(
-                                    " تم الرفض",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 226, 17, 17)),
-                                  ),
-                      ],
+                                  fontFamily: 'Plus Jakarta Sans',
+                                  color: Color(0xFF57636C),
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                            Text(
+                              '${empVacation.vacationTypeName}',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF14181B),
+                                fontSize: 16,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          " الموارد البشرية",
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        empVacation.vacationStateHr == '0'
-                            ? Text(
-                                " في الانتظار ",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 250, 232, 27)),
-                              )
-                            : empVacation.vacationStateHr == '1'
-                                ? Text(
-                                    " تمت الموافقه ",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 6, 216, 37)),
-                                  )
-                                : Text(
-                                    " تم الرفض",
-                                    style: TextStyle(
-                                        color: Color.fromARGB(255, 226, 17, 17)),
-                                  ),
-                      ],
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'from',
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Color(0xFF14181B),
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            child: Text(
+                              formattedStartDate,
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF57636C),
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            'to',
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Color(0xFF14181B),
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                            child: Text(
+                              formattedEndDate,
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                fontFamily: 'Plus Jakarta Sans',
+                                color: Color(0xFF57636C),
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                width: 280,
+                child: Divider(
+                  thickness: 1,
+                  color: Color(0xFF421BC9),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(4, 0, 4, 4),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "المدير",
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Color(0xFF14181B),
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // color: Colors.red,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 4, 0, 0),
+                              child: empVacation.vacationStateAdmin == '0'
+                                  ? const Text(
+                                      " في الانتظار ",
+                                      style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 250, 232, 27)),
+                                    )
+                                  : empVacation.vacationStateAdmin == '1'
+                                      ? const Text(
+                                          " تمت الموافقه ",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 6, 216, 37)),
+                                        )
+                                      : const Text(
+                                          " تم الرفض",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 226, 17, 17)),
+                                        ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(12, 0, 12, 0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text(
+                            " الموارد البشرية",
+                            style: TextStyle(
+                              fontFamily: 'Plus Jakarta Sans',
+                              color: Color(0xFF14181B),
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // color: Color(0xFFF9F300),
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 4, 0, 0),
+                              child: empVacation.vacationStateHr == '0'
+                                  ? const Text(
+                                      " في الانتظار ",
+                                      style: TextStyle(
+                                          color: Color.fromARGB(
+                                              255, 250, 232, 27)),
+                                    )
+                                  : empVacation.vacationStateHr == '1'
+                                      ? const Text(
+                                          " تمت الموافقه ",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 6, 216, 37)),
+                                        )
+                                      : const Text(
+                                          " تم الرفض",
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 226, 17, 17)),
+                                        ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -289,6 +540,144 @@ class VacationCard extends StatelessWidget {
         ),
       ),
     );
+    // return Card(
+
+    //   shape: RoundedRectangleBorder(
+    //     borderRadius:
+    //         BorderRadius.circular(23.0), // تعديل قيمة الانحناء حسب الرغبة
+    //   ), // BorderRadius.all(Radius.circular(90)),
+    //   elevation: 2,
+    //   child: InkWell(
+    //     onTap: () {
+    //       Get.bottomSheet(VacationBottomSheet(empvacation: empVacation));
+    //     },
+    //     child: Container(
+
+    //       decoration: BoxDecoration(
+    //               borderRadius: BorderRadius.circular(23.0),
+    //         // gradient: LinearGradient(
+    //         //   colors: [
+    //         //     Color.fromARGB(255, 187, 255, 254),
+    //         //     Color.fromARGB(255, 39, 78, 255)
+    //         //   ],
+    //         //   stops: [0, 1],
+    //         //   begin: AlignmentDirectional(0.03, -1),
+    //         //   end: AlignmentDirectional(-0.93, 1.5),
+    //         // ),
+    //       ),
+    //       child: Column(
+    //         children: [
+    //           Padding(
+    //             padding: const EdgeInsets.all(8.0),
+    //             child: ListTile(
+    //               title: Row(
+    //                 children: [
+    //                   Icon(
+    //                     Icons.person_4,
+    //                     size: 40,
+    //                   ),
+    //                   Column(children: [
+    //                     Text(
+    //                       '${empVacation.userUsername}',
+    //                       style: TextStyle(
+    //                         fontSize: 18,
+    //                         fontWeight: FontWeight.bold,
+    //                         color: Colors.blue,
+    //                       ),
+    //                     ),
+    //                     Text(
+    //                       '${empVacation.jopName}/${empVacation.departName}',
+    //                       style: TextStyle(
+    //                         fontSize: 16,
+    //                         color: Colors.grey[600],
+    //                       ),
+    //                     ),
+    //                   ]),
+    //                 ],
+    //               ),
+    //               subtitle: Row(
+    //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //                 children: [
+    //                   Text(
+    //                     "From: ${formattedStartDate}",
+    //                     style: TextStyle(color: Colors.grey[700]),
+    //                   ),
+    //                   Text(
+    //                     "To: ${formattedEndDate}",
+    //                     style: TextStyle(color: Colors.grey[700]),
+    //                   ),
+    //                 ],
+    //               ),
+    //               trailing:   Text(
+    //                 Jiffy(empVacation.departCreate, "yyyy-MM-dd").fromNow(),
+
+    //                 style: TextStyle(color: Colors.grey[700]),
+    //               ),
+    //             ),
+    //           ),
+    //           Padding(
+    //             padding: const EdgeInsets.all(8.0),
+    //             child: Row(
+    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //               children: [
+    //                 Column(
+    //                   children: [
+    //                     Text(
+    //                       "المدير",
+    //                       style: TextStyle(color: Colors.grey[700]),
+    //                     ),
+    //                     empVacation.vacationStateAdmin == '0'
+    //                         ? Text(
+    //                             " في الانتظار ",
+    //                             style: TextStyle(
+    //                                 color: Color.fromARGB(255, 250, 232, 27)),
+    //                           )
+    //                         : empVacation.vacationStateAdmin == '1'
+    //                             ? Text(
+    //                                 " تمت الموافقه ",
+    //                                 style: TextStyle(
+    //                                     color: Color.fromARGB(255, 6, 216, 37)),
+    //                               )
+    //                             : Text(
+    //                                 " تم الرفض",
+    //                                 style: TextStyle(
+    //                                     color: Color.fromARGB(255, 226, 17, 17)),
+    //                               ),
+    //                   ],
+    //                 ),
+    //                 Column(
+    //                   children: [
+    //                     Text(
+    //                       " الموارد البشرية",
+    //                       style: TextStyle(color: Colors.grey[700]),
+    //                     ),
+    //                     empVacation.vacationStateHr == '0'
+    //                         ? Text(
+    //                             " في الانتظار ",
+    //                             style: TextStyle(
+    //                                 color: Color.fromARGB(255, 250, 232, 27)),
+    //                           )
+    //                         : empVacation.vacationStateHr == '1'
+    //                             ? Text(
+    //                                 " تمت الموافقه ",
+    //                                 style: TextStyle(
+    //                                     color: Color.fromARGB(255, 6, 216, 37)),
+    //                               )
+    //                             : Text(
+    //                                 " تم الرفض",
+    //                                 style: TextStyle(
+    //                                     color: Color.fromARGB(255, 226, 17, 17)),
+    //                               ),
+    //                   ],
+    //                 ),
+    //               ],
+    //             ),
+    //           ),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
 
@@ -304,50 +693,50 @@ class CustomDrawer extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 40, 8, 8),
         child: Column(
           children: [
-              ListTile(
-                title: Text("Official Vacations"),
-                leading: Icon(Icons.home),
-                onTap: () {
-                  // Handle navigation or action
-                },
-              ),
-              ListTile(
-                title: Text("الاجازات "),
-                leading: Icon(Icons.local_fire_department),
-                onTap: () {
-                  Get.toNamed(AppRoutes.vacationtpyeview);
-                },
-              ),
-              ListTile(
-                title: Text("الاقسام "),
-                leading: Icon(Icons.local_fire_department),
-                onTap: () {
-                  Get.toNamed(AppRoutes.departementview);
-                },
-              ),
-              ListTile(
-                title: Text("المستخدمين"),
-                leading: Icon(Icons.local_fire_department),
-                onTap: () {
-                  Get.toNamed(AppRoutes.viewwituser);
-                },
-              ),
-              ListTile(
-            title: Text("jop"),
-            leading: Icon(Icons.local_fire_department),
-            onTap: () {
-              Get.toNamed(AppRoutes.jopview);
-            },
-          ),
-          ListTile(
-            title: Text("الاعدادات"),
-            leading: Icon(Icons.settings),
-            onTap: () {
-              Get.toNamed(AppRoutes.settings);
-            },
-          ),
-              // Add more ListTile items as needed
-            ], 
+            ListTile(
+              title: Text("Official Vacations"),
+              leading: Icon(Icons.home),
+              onTap: () {
+                // Handle navigation or action
+              },
+            ),
+            ListTile(
+              title: Text("الاجازات "),
+              leading: Icon(Icons.local_fire_department),
+              onTap: () {
+                Get.toNamed(AppRoutes.vacationtpyeview);
+              },
+            ),
+            ListTile(
+              title: Text("الاقسام "),
+              leading: Icon(Icons.local_fire_department),
+              onTap: () {
+                Get.toNamed(AppRoutes.departementview);
+              },
+            ),
+            ListTile(
+              title: Text("المستخدمين"),
+              leading: Icon(Icons.local_fire_department),
+              onTap: () {
+                Get.toNamed(AppRoutes.viewwituser);
+              },
+            ),
+            ListTile(
+              title: Text("jop"),
+              leading: Icon(Icons.local_fire_department),
+              onTap: () {
+                Get.toNamed(AppRoutes.jopview);
+              },
+            ),
+            ListTile(
+              title: Text("الاعدادات"),
+              leading: Icon(Icons.settings),
+              onTap: () {
+                Get.toNamed(AppRoutes.settings);
+              },
+            ),
+            // Add more ListTile items as needed
+          ],
         ),
       ),
     );
@@ -355,8 +744,7 @@ class CustomDrawer extends StatelessWidget {
 }
 
 class VacationBottomSheet extends StatelessWidget {
-  final EmpvacatcontrollerImp controller =
-      Get.put(EmpvacatcontrollerImp());
+  final EmpvacatcontrollerImp controller = Get.put(EmpvacatcontrollerImp());
   final EmpVacationModel empvacation;
 
   VacationBottomSheet({required this.empvacation});
@@ -365,7 +753,6 @@ class VacationBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-
         padding: EdgeInsets.all(16),
         decoration: AppDecoration.outlineGray8002
             .copyWith(borderRadius: BorderRadiusStyle.customBorderBL36),
@@ -440,7 +827,8 @@ class VacationBottomSheet extends StatelessWidget {
                             text: "مرفوض",
                             margin: getMargin(right: 6),
                             variant: ButtonVariant.FillGray800,
-                            onTap: () {},)
+                            onTap: () {},
+                          )
                         // Text("مرفوض")
                         : CustomButton(
                             height: getVerticalSize(58),
@@ -502,7 +890,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             gradient: LinearGradient(
               colors: [
                 Color.fromARGB(255, 2, 8, 71),
-               ColorConstant.gray900,
+                ColorConstant.gray900,
               ],
               stops: [0, 1],
               begin: AlignmentDirectional(0.03, -1),
@@ -516,7 +904,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 }
-
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -696,10 +1083,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 //                       ),
 //                     ),
 //                     PopupMenuButton<String>(
-               
+
 //             icon: Icon(Icons.filter_1_outlined),
-          
-          
+
 //                       onSelected: (value) {
 //                         controller.filterData(value);
 //                       },

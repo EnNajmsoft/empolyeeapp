@@ -1,7 +1,9 @@
 import 'package:empolyeeapp/core/class/statusrequest.dart';
 import 'package:empolyeeapp/core/functions/handingdatacontroller.dart';
 import 'package:country_pickers/country.dart';
+import 'package:empolyeeapp/data/datasource/remote/hr/DepartementData.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/JopData.dart';
+import 'package:empolyeeapp/data/model/DepartementModel.dart';
 import 'package:empolyeeapp/data/model/JopModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -13,33 +15,41 @@ abstract class SignUpController extends GetxController {
   signUp();
   goToSignIn();
   showPassword();
+  viewDepartement();
+viewJoopdep(departid);
 }
 
 class SignUpControllerImp extends SignUpController {
+
   GlobalKey<FormState> formstatetow = GlobalKey<FormState>();
+
+  StatusRequest statusRequest = StatusRequest.none;
+
   SignupData signupData = SignupData(Get.find());
 
   late TextEditingController username;
   late TextEditingController userlastname;
   late TextEditingController email;
   late TextEditingController phone;
+  late TextEditingController depart;
   late TextEditingController jopid;
   late TextEditingController password;
   late Country selectedCountry;
   late String? token;
-  late String? jopselect ='1';
-
-  List<String> dropdownItemList = ["maile", "fimail"];
+  late String? jopselect;
+  late String? usertype;
+  bool switchselect = false;
   bool isshowpassword = true;
 
+  DepartementData departementData = DepartementData(Get.find());
+  List<DepartementModel> departements = [];
+  String? departid;
 
   JopData jopdata = JopData(Get.find());
-  List<JopModel> jops = [];
-
-  StatusRequest statusRequest = StatusRequest.none;
+  List<JopModel> jopsdep = [];
 
 
-  List data = [];
+
 
   @override
   signUp() async {
@@ -51,7 +61,8 @@ class SignUpControllerImp extends SignUpController {
           email.text, phone.text,
           password.text, 
           token!,
-          jopselect!);
+          jopselect!,
+          usertype!);
       statusRequest = handlingData(response);
 
       if (StatusRequest.success == statusRequest) {
@@ -79,29 +90,90 @@ class SignUpControllerImp extends SignUpController {
     }
   }
 
+  // @override
+  // viewJoop() async {
+  //   statusRequest = StatusRequest.loading;
+  //   update();
+  //   var response = await jopdata.getAllJopData();
+  //   statusRequest = StatusRequest.success;
+  //   if (response['status'] == "success") {
+  //     print('======================$response================');
+  //     List responsedata = response['data'];
+  //     jops.clear();
+  //     jops.addAll(responsedata.map((e) => JopModel.fromJson(e)));
+  //   } else {
+  //     statusRequest = StatusRequest.failure;
+  //   }
+
+  //   update();
+  // }
+
   @override
-  viewJoop() async {
+  showPassword() {
+    isshowpassword = isshowpassword == true ? false : true;
+    update();
+  }
+showjop(){
+if(switchselect==false){
+  print(switchselect);
+  switchselect==true;
+  usertype = '0';
+  update();
+}else {
+  print(switchselect);
+  switchselect==false;
+  usertype = '1';
+
+  update();
+
+
+}
+    update();
+
+}
+  @override
+  viewDepartement() async {
     statusRequest = StatusRequest.loading;
     update();
-    var response = await jopdata.getAllJopData();
+    var response = await departementData.getDepartementData();
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
       print('======================$response================');
       List responsedata = response['data'];
-      jops.clear();
-      jops.addAll(responsedata.map((e) => JopModel.fromJson(e)));
+      departements.clear();
+      departements
+          .addAll(responsedata.map((e) => DepartementModel.fromJson(e)));
     } else {
       statusRequest = StatusRequest.failure;
     }
 
     update();
   }
+  @override
+  viewJoopdep(departid) async {
+    statusRequest = StatusRequest.loading;
+    update();
+    var response = await jopdata.getJopData(departid);
+    statusRequest = StatusRequest.success;
+    if (response['status'] == "success") {
+       jopid.text = ' حدد الوظيفة';
 
-  showPassword() {
-    isshowpassword = isshowpassword == true ? false : true;
+      print('======================$response================');
+      List responsedata = response['data'];
+      jopsdep.clear();
+      jopsdep.addAll(responsedata.map((e) => JopModel.fromJson(e)));
+    } else {
+       jopsdep.clear();
+       jopid.text ="لا توجد وظئف بعد";
+      statusRequest = StatusRequest.failure;
+    update();
+      
+
+
+    }
+
     update();
   }
-
   onTapSignup() {
     Get.toNamed(AppRoutes.fillProfileScreen);
   }
@@ -112,20 +184,21 @@ class SignUpControllerImp extends SignUpController {
   }
 
   geytoken() async {
-    // token = await FirebaseMessaging.instance.getToken();
-    // print('=======================================');
-    // print('$token');
+    token = await FirebaseMessaging.instance.getToken();
+    print('=======================================');
+    print('$token');
   }
 
   @override
   void onInit() {
-    viewJoop();
+     viewDepartement();
     geytoken();
     username     = TextEditingController();
     userlastname = TextEditingController();
     email        = TextEditingController();
     phone        = TextEditingController();
     jopid        = TextEditingController();
+    depart       = TextEditingController();
     password     = TextEditingController();
 
     super.onInit();

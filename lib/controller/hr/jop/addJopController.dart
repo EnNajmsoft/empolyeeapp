@@ -4,6 +4,7 @@ import 'package:empolyeeapp/data/datasource/remote/hr/DepartementData.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/JopData.dart';
 import 'package:empolyeeapp/data/datasource/remote/hr/UserData.dart';
 import 'package:empolyeeapp/data/model/DepartementModel.dart';
+import 'package:empolyeeapp/data/model/JopModel.dart';
 import 'package:empolyeeapp/data/model/usermodel.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 abstract class AddJopController extends GetxController {
   addJop();
   viewDepartement();
+   viewJoopdep(departid);
 }
 
 class AddJopControllerImp extends AddJopController {
@@ -19,6 +21,7 @@ class AddJopControllerImp extends AddJopController {
   JopData jopdata = JopData(Get.find());
   List<DepartementModel> departements = [];
   GlobalKey<FormState> formStateAddJop = GlobalKey<FormState>();
+  List<JopModel> jopsdep = [];
 
   StatusRequest statusRequest = StatusRequest.none;
 
@@ -57,6 +60,26 @@ class AddJopControllerImp extends AddJopController {
       departements.clear();
       departements
           .addAll(responsedata.map((e) => DepartementModel.fromJson(e)));
+
+          
+    } else {
+      statusRequest = StatusRequest.failure;
+    }
+
+    update();
+  }
+  
+  @override
+  viewJoopdep(departid) async {
+    statusRequest = StatusRequest.loading;
+    update();
+    var response = await jopdata.getJopData(departid);
+    statusRequest = StatusRequest.success;
+    if (response['status'] == "success") {
+      print('======================$response================');
+      List responsedata = response['data'];
+      jopsdep.clear();
+      jopsdep.addAll(responsedata.map((e) => JopModel.fromJson(e)));
     } else {
       statusRequest = StatusRequest.failure;
     }

@@ -1,7 +1,5 @@
-import 'package:empolyeeapp/controller/admin/vacationDeparController.dart';
 import 'package:empolyeeapp/controller/empolyee/vacation/viewcontrooler.dart';
 import 'package:empolyeeapp/screen/admin/oneVacationScreen.dart';
-import 'package:empolyeeapp/testchatgpt.dart';
 import 'package:empolyeeapp/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,10 +16,9 @@ class Emphome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Employee Vacations"),
+        title: const Text("Employee Vacations"),
         centerTitle: true,
         backgroundColor: Colors.blue, // تخصيص لون الخلفية
-        actions: [],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -35,43 +32,43 @@ class Emphome extends StatelessWidget {
         child: Column(
           children: [
               ListTile(
-                title: Text("Official Vacations"),
-                leading: Icon(Icons.home),
+                title: const Text("Official Vacations"),
+                leading: const Icon(Icons.home),
                 onTap: () {
                   // Handle navigation or action
                 },
               ),
               ListTile(
-                title: Text("الاجازات "),
-                leading: Icon(Icons.local_fire_department),
+                title: const Text("الاجازات "),
+                leading: const Icon(Icons.local_fire_department),
                 onTap: () {
                   Get.toNamed(AppRoutes.vacationtpyeview);
                 },
               ),
               ListTile(
-                title: Text("الاقسام "),
-                leading: Icon(Icons.local_fire_department),
+                title: const Text("الاقسام "),
+                leading: const Icon(Icons.local_fire_department),
                 onTap: () {
                   Get.toNamed(AppRoutes.departementview);
                 },
               ),
               ListTile(
-                title: Text("المستخدمين"),
-                leading: Icon(Icons.local_fire_department),
+                title: const Text("المستخدمين"),
+                leading: const Icon(Icons.local_fire_department),
                 onTap: () {
                   Get.toNamed(AppRoutes.viewwituser);
                 },
               ),
               ListTile(
-            title: Text("jop"),
-            leading: Icon(Icons.local_fire_department),
+            title: const Text("jop"),
+            leading: const Icon(Icons.local_fire_department),
             onTap: () {
               Get.toNamed(AppRoutes.jopview);
             },
           ),
           ListTile(
-            title: Text("الاعدادات"),
-            leading: Icon(Icons.settings),
+            title: const Text("الاعدادات"),
+            leading: const Icon(Icons.settings),
             onTap: () {
               Get.toNamed(AppRoutes.settings);
             },
@@ -85,7 +82,7 @@ class Emphome extends StatelessWidget {
         builder: (controller) => WillPopScope(
           onWillPop: alertExitApp,
           child: Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -93,6 +90,7 @@ class Emphome extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextField(
+                        focusNode: FocusNode(),
                         decoration: InputDecoration(
                           hintText: 'Search vacations...',
                           border: const OutlineInputBorder(
@@ -116,19 +114,19 @@ class Emphome extends StatelessWidget {
                         controller.filterData(value);
                       },
                       itemBuilder: (BuildContext context) => [
-                        PopupMenuItem<String>(
+                       const PopupMenuItem<String>(
                           value: '0',
                           child: Text('Pending'),
                         ),
-                        PopupMenuItem<String>(
+                       const PopupMenuItem<String>(
                           value: '1',
                           child: Text('Approved'),
                         ),
-                        PopupMenuItem<String>(
+                      const  PopupMenuItem<String>(
                           value: '2',
                           child: Text('Rejected'),
                         ),
-                        PopupMenuItem<String>(
+                     const   PopupMenuItem<String>(
                           value: 'all',
                           child: Text('All'),
                         ),
@@ -136,11 +134,11 @@ class Emphome extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+              const  SizedBox(height: 16),
                 Expanded(
                   child: ListView.separated(
                     itemCount: controller.empVacations.length,
-                    separatorBuilder: (context, index) => SizedBox(height: 8),
+                    separatorBuilder: (context, index) => const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       DateFormat dateFormat = DateFormat('yyyy-MM-dd');
                       String? startDateString =
@@ -231,13 +229,13 @@ class vacationBottomsheet extends StatelessWidget {
 
   final EmpVacationModel empvacation;
 
-  vacationBottomsheet({required this.empvacation});
+  vacationBottomsheet({super.key, required this.empvacation});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: AppDecoration.outlineGray8002
             .copyWith(borderRadius: BorderRadiusStyle.customBorderTL40),
         child: Column(
@@ -341,7 +339,7 @@ class VacationCardEmpoolyee extends StatelessWidget {
                     children: [
                       Text(
                         'طلب رقم : ${empVacation.empVacationId}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
@@ -357,7 +355,7 @@ class VacationCardEmpoolyee extends StatelessWidget {
                           ),
                           Text(
                             ' ${empVacation.vacationTypeName}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Color.fromARGB(255, 6, 5, 5),
                             ),
@@ -370,11 +368,11 @@ class VacationCardEmpoolyee extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "From: ${formattedStartDate}",
+                        "From: $formattedStartDate",
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       Text(
-                        "To: ${formattedEndDate}",
+                        "To: $formattedEndDate",
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                     ],
@@ -397,18 +395,18 @@ class VacationCardEmpoolyee extends StatelessWidget {
                           style: TextStyle(color: Colors.grey[700]),
                         ),
                         empVacation.vacationStateAdmin == '0'
-                            ? Text(
+                            ? const Text(
                                 " في الانتظار ",
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 250, 232, 27)),
                               )
                             : empVacation.vacationStateAdmin == '1'
-                                ? Text(
+                                ? const Text(
                                     " تمت الموافقه ",
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 6, 216, 37)),
                                   )
-                                : Text(
+                                : const Text(
                                     " تم الرفض",
                                     style: TextStyle(
                                         color:
@@ -423,18 +421,18 @@ class VacationCardEmpoolyee extends StatelessWidget {
                           style: TextStyle(color: Colors.grey[700]),
                         ),
                         empVacation.vacationStateHr == '0'
-                            ? Text(
+                            ? const Text(
                                 " في الانتظار ",
                                 style: TextStyle(
                                     color: Color.fromARGB(255, 250, 232, 27)),
                               )
                             : empVacation.vacationStateHr == '1'
-                                ? Text(
+                                ? const Text(
                                     " تمت الموافقه ",
                                     style: TextStyle(
                                         color: Color.fromARGB(255, 6, 216, 37)),
                                   )
-                                : Text(
+                                : const Text(
                                     " تم الرفض",
                                     style: TextStyle(
                                         color:

@@ -142,6 +142,7 @@ class VacationBottomSheet extends StatelessWidget {
               ListTile(
                 title: Text(controller.usersmodel![index].userUsername!),
                 subtitle: Text(controller.usersmodel![index].jopName!),
+                leading: Text(controller.usersmodel![index].userEmail!),
                 onTap: () {
                   controller.usersmodel!.first = controller.usersmodel![index];
                   controller.departmentManger.text =

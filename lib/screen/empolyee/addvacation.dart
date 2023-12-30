@@ -10,7 +10,7 @@ class AddVacation extends StatelessWidget {
   final EmpvacAddcontrollerImp controller = Get.put(EmpvacAddcontrollerImp());
   // static const String appBarTitle = "اضفه اجازة موظف";
 
-   AddVacation();
+   AddVacation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +22,9 @@ class AddVacation extends StatelessWidget {
         title: const Text("اضفه اجازة موظف"),
       ),
       body: Container(
-        padding: EdgeInsets.only(top: 50),
+        padding: const EdgeInsets.only(top: 50),
         child: Padding(
-          padding: EdgeInsets.all(26.0),
+          padding: const EdgeInsets.all(26.0),
           child: Form(
             key: controller.formstateaddvactmp,
             child: Column(
@@ -36,13 +36,13 @@ class AddVacation extends StatelessWidget {
                   labelText: 'Start Date',
                   context: context,
                 ),
-                SizedBox(height: 16),
+              const  SizedBox(height: 16),
                  buildDateTextField(
                   controller: controller.empvacationend,
                   labelText: 'End Date',
                   context: context,
                 ),
-                SizedBox(height: 16),
+               const SizedBox(height: 16),
                   customInputField(
                   controller: controller.empvacationtype,
                   label: 'نوع الاجازه',
@@ -53,18 +53,19 @@ class AddVacation extends StatelessWidget {
                   },
                   suffixIcon: Icons.arrow_drop_down,
                 ),
-                SizedBox(height: 16),
+              const  SizedBox(height: 16),
                 customInputField(
                   controller: controller.empvacationnote,
                   label: 'ملاحظة حول الاجازه',
                   hint: 'أدخل ملاحظة',
                 ),
-                SizedBox(height: 24),
+                const SizedBox(height: 24),
                 CustomButton(
                   onTap: () => controller.addvacationt(),
                   text: 'إضافة',
                   height: 50,
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 50),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 50),
                 ),
               ],
             ),
@@ -179,7 +180,7 @@ class AddVacation extends StatelessWidget {
         labelStyle: const TextStyle(color: Color(0xFF2697B0)),
         border: OutlineInputBorder(
           borderRadius:
-              borderradius != null ? borderradius : BorderRadius.circular(12),
+              borderradius ?? BorderRadius.circular(12),
         ),
         suffixIcon: suffixIcon != null
             ? InkWell(
@@ -222,7 +223,7 @@ class AddVacation extends StatelessWidget {
 class VacationBottomSheet extends StatelessWidget {
   final EmpvacAddcontrollerImp controller = Get.put(EmpvacAddcontrollerImp());
 
-  VacationBottomSheet();
+  VacationBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

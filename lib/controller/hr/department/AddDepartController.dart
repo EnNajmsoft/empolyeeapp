@@ -25,7 +25,7 @@ class AddDepartcontrollerImp extends AddDepartcontroller {
   late TextEditingController departmentName;
   late TextEditingController departmentManger;
   late TextEditingController departmentNote;
-  String? mangerId;
+  String? mangerId = "1";
 
   @override
   addDepartement() async {
@@ -60,8 +60,12 @@ class AddDepartcontrollerImp extends AddDepartcontroller {
     if (response['status'] == "success") {
       print('======================$response================');
       List responsedata = response['data'];
-      usersmodel!.clear();
-      usersmodel!.addAll(responsedata.map((e) => UserModel.fromJson(e)));
+   
+      usersmodel = response['data']
+          .map<UserModel>((e) => UserModel.fromJson(e))
+          .where((element) =>
+              element.userApproval == "3" && element.userType == "1")
+          .toList();
     } else {
       statusRequest = StatusRequest.failure;
     }

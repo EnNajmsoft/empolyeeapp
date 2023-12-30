@@ -13,7 +13,7 @@ class JopData {
   getJopData(
     String departid,
   ) async {
-    var response = await crud.postData(AppLink.jopviewall, {
+    var response = await crud.postData(AppLink.jopviewa, {
       "departid": departid,
 
     });

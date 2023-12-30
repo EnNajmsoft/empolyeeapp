@@ -19,8 +19,9 @@ abstract class HRUserController extends GetxController {
 class HRUserControllerImp extends HRUserController {
   UserData userData = UserData(Get.find());
   StatusRequest statusRequest = StatusRequest.none;
-
+  List<UserModel> witallUsers = [];
   List<UserModel> witUsers = [];
+  List<UserModel> witAdmin = [];
   
 
   @override
@@ -32,8 +33,16 @@ class HRUserControllerImp extends HRUserController {
     if (response['status'] == "success") {
       print('======================$response================');
       List responsedata = response['data'];
-      witUsers.clear();
-      witUsers.addAll(responsedata.map((e) => UserModel.fromJson(e)));
+      witallUsers.clear();
+      witallUsers.addAll(responsedata.map((e) => UserModel.fromJson(e)));
+
+      witUsers =
+          witallUsers.where((element) => element.userType == "0").toList();
+          
+      witAdmin =
+          witallUsers.where((element) => element.userType == "1").toList();
+          
+
     } else {
       statusRequest = StatusRequest.failure;
     }
@@ -49,6 +58,7 @@ class HRUserControllerImp extends HRUserController {
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
       witUsers.removeWhere((element) => element.userId == userid);
+      witAdmin.removeWhere((element) => element.userId == userid);
       print('chang ssssssssss approvaluser');
     } else {
             print('chang error');
@@ -65,9 +75,9 @@ class HRUserControllerImp extends HRUserController {
     var response = await userData.rejectUser(userid);
     statusRequest = StatusRequest.success;
     if (response['status'] == "success") {
-     
-      witUsers.removeWhere((element) => element.userId == userid);
-      update();
+     witUsers.removeWhere((element) => element.userId == userid);
+      witAdmin.removeWhere((element) => element.userId == userid);
+  
       print('chang ssssssssss rejectuser');
     } else {
             print('chang error');
@@ -77,26 +87,6 @@ class HRUserControllerImp extends HRUserController {
     update();
   }
 
- 
-
-  // @override
-  // getempvacationtOne(empId) async {
-  //   statusRequest = StatusRequest.loading;
-  //   var response = await empvacatData.getempvacDataOne(empId);
-  //   print("=============================== va   one============= $response ");
-  //   statusRequest = handlingData(response);
-  //   if (StatusRequest.success == statusRequest) {
-  //     if (response['status'] == "success") {
-  //       List responsedata = response['data'];
-  //       empvactone.clear();
-  //       empvactone
-  //           .addAll(responsedata.map((e) => EmpVacationModel.fromJson(e)));
-  //     } else {
-  //       statusRequest = StatusRequest.failure;
-  //     }
-  //   }
-  //   update();
-  // }
 
   @override
   void onInit() {

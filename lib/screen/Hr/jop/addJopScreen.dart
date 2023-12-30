@@ -1,3 +1,4 @@
+import 'package:empolyeeapp/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:empolyeeapp/controller/hr/jop/addJopController.dart';
@@ -13,12 +14,14 @@ class AddDJopScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-     appBar: const PreferredSize(
+      appBar: const PreferredSize(
         preferredSize: Size.fromHeight(70.0),
-        child: CustomAppBar( titleapbar: 'jop',),
+        child: CustomAppBar(
+          titleapbar: 'jop',
+        ),
       ),
       body: Container(
-padding: EdgeInsets.only(top: 50),
+        padding: EdgeInsets.only(top: 50),
         child: Padding(
           padding: EdgeInsets.all(26.0),
           child: Form(
@@ -26,6 +29,11 @@ padding: EdgeInsets.only(top: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+
+
+
+
+                
                 _buildInputField(
                   controller: controller.jopName,
                   label: 'اسم الوظيفة',
@@ -38,6 +46,48 @@ padding: EdgeInsets.only(top: 50),
                   hint: 'حدد القسم',
                   readOnly: true,
                   onTap: () => _showDepartmentsMenu(context),
+                  suffixIcon: Icons.arrow_drop_down,
+                ),
+                SizedBox(height: 16),
+                _buildInputField(
+                  controller: controller.jopdepart,
+                  label: 'القسم ',
+                  hint: 'حدد القسم',
+                  readOnly: true,
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: 300,
+                          child: ListView.builder(
+                            itemCount: controller.jopsdep.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                children: [
+                                  ListTile(
+                                    title: Text(' قسم  : '
+                                        "${controller.jopsdep[index].jopNote!}"),
+                                    subtitle: Text(' مدير القسم  : '
+                                        "${controller.jopsdep[index].jopName!}"),
+                                    onTap: () {
+                                      controller.departements.first =
+                                          controller.departements[index];
+                                      controller.jopdepart.text = controller
+                                          .departements[index].departName!;
+                                   
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  const Divider(),
+                                ],
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
                   suffixIcon: Icons.arrow_drop_down,
                 ),
                 SizedBox(height: 16),
@@ -111,8 +161,9 @@ padding: EdgeInsets.only(top: 50),
               return Column(
                 children: [
                   ListTile(
-                    title: Text(' قسم  : ' "${controller.departements[index].departName!}"),
-                     subtitle:  Text(' مدير القسم  : '
+                    title: Text(' قسم  : '
+                        "${controller.departements[index].departName!}"),
+                    subtitle: Text(' مدير القسم  : '
                         "${controller.departements[index].userUsername!}"),
                     onTap: () {
                       controller.departements.first =
@@ -123,6 +174,7 @@ padding: EdgeInsets.only(top: 50),
                           controller.departements[index].departId!;
                       print(controller.jopdepart.text);
                       print(controller.departid);
+                      // controller.viewJoopdep(controller.departid);
                       Navigator.pop(context);
                     },
                   ),
@@ -136,6 +188,7 @@ padding: EdgeInsets.only(top: 50),
     );
   }
 }
+
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String titleapbar;
   const CustomAppBar({super.key, required this.titleapbar});
@@ -156,7 +209,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.vertical(
                 top: Radius.zero, bottom: Radius.circular(40)),
             gradient: LinearGradient(
-              colors: [Color.fromARGB(255, 112, 218, 236), Color.fromARGB(255, 2, 142, 149)],
+              colors: [
+                Color.fromARGB(255, 112, 218, 236),
+                Color.fromARGB(255, 2, 142, 149)
+              ],
               stops: [0, 1],
               begin: AlignmentDirectional(0.03, -1),
               end: AlignmentDirectional(-0.03, 1),

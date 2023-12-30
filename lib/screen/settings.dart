@@ -9,7 +9,8 @@ class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SettingsController controller = Get.put(SettingsController());
-    return Container(
+    return Scaffold(
+      body: Container(
       child: ListView(
         children: [
           // Stack(
@@ -69,7 +70,7 @@ class Settings extends StatelessWidget {
                 ),
                 ListTile(
                   onTap: () {},
-                  trailing: Icon(Icons.phone_callback_outlined),
+                  trailing: const Icon(Icons.phone_callback_outlined),
                   title: Text("Contact us"),
                 ),
                 ListTile(
@@ -84,6 +85,8 @@ class Settings extends StatelessWidget {
           )
         ],
       ),
+    ) ,
     );
+   
   }
 }

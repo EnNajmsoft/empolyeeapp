@@ -6,16 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:empolyeeapp/routes/app_routes.dart';
 import 'package:firebase_core/firebase_core.dart';
-// void main() async {
-//   await initialServices();
-//   runApp(MyApp());
-// }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-  );
+  await Firebase.initializeApp();
   await initialServices();
-
   runApp(MyApp());
 }
 
@@ -31,11 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'hotel relaxe',
       locale: controller.language,
       debugShowCheckedModeBanner: false,
-      // initialRoute: AppRoutes.addvacationtscreen,
       initialBinding: InitialBindings(),
-      // initialRoute: AppRoutes.empvacationview,
-      // initialRoute: AppRoutes.empvacationdepview,
-      // initialRoute: AppRoutes.signUpBlankScreen,
       initialRoute: AppRoutes.signInScreen,
       getPages: routes,
     );

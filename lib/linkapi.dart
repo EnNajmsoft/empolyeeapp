@@ -48,7 +48,7 @@ class AppLink {
 
 
   static const String jopviewall = "$server/jop/viewall.php";
-  static const String jopviewa = "$server/jop/view.php";
+  static const String jopviewa = "$server/jop/viewdep.php";
   static const String jopadd = "$server/jop/add.php";
 
 // ================================= admin ========================== //

@@ -10,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 
 abstract class Empvacatcontroller extends GetxController {
   getempvacationt();
+    refrehHRVacation();
   filterData(String valu);
   approvalvac(empVacationId);
   rejectvac(empVacationId);
@@ -32,6 +33,7 @@ class EmpvacatcontrollerImp extends Empvacatcontroller {
   @override
   getempvacationt() async {
     statusRequest = StatusRequest.loading;
+    update();
     var response = await empvacatData.getempvacData();
     print("=============================== va============= $response ");
     statusRequest = handlingData(response);
@@ -57,6 +59,10 @@ class EmpvacatcontrollerImp extends Empvacatcontroller {
       }
     }
     update();
+  }
+  @override
+  refrehHRVacation() {
+    getempvacationt();
   }
 
   @override

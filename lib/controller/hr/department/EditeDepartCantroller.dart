@@ -24,6 +24,8 @@ class EditeDepartcontrollerImp extends EditeDepartcontroller {
 
   StatusRequest statusRequest = StatusRequest.none;
   List<UserModel>? usersmodel = [];
+  List<UserModel>? usersadmin = [];
+
   DepartementModel? departmenModel;
   late TextEditingController departmentName;
   late TextEditingController departmentManger;
@@ -63,8 +65,12 @@ class EditeDepartcontrollerImp extends EditeDepartcontroller {
     if (response['status'] == "success") {
       print('======================$response================');
       List responsedata = response['data'];
-      usersmodel!.clear();
-      usersmodel!.addAll(responsedata.map((e) => UserModel.fromJson(e)));
+ 
+         usersmodel = response['data']
+          .map<UserModel>((e) => UserModel.fromJson(e)).where((element) =>
+            element.userApproval == "3" && element.userType == "1")
+          .toList();
+        
     } else {
       statusRequest = StatusRequest.failure;
     }

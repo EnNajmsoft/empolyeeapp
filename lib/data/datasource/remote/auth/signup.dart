@@ -14,14 +14,17 @@ class SignupData {
     String password,
     String token,
     String jopid,
+    String usertype,
     ) async {
     var response = await crud.postData(AppLink.signUp, {
       "username" : username , 
-      "email" : email , 
-      "phone" : phone  ,  
+      "email" :   email , 
+      "phone" :   phone  ,  
       "password": password, 
-      "token": token, 
-      "jopid": jopid, 
+      "token":    token, 
+      "jopid":    jopid, 
+      "usertype": usertype, 
+      
 
     });
     return response.fold((l) => l, (r) => r);

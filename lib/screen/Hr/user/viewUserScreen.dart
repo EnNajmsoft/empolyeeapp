@@ -14,39 +14,90 @@ import 'package:get/get.dart';
 class UserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(' المستخدمين المنتظرين'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GetBuilder<HRUserControllerImp>(
-          init: HRUserControllerImp(), // قم بتهيئة الكنترولر هنا
-          builder: (controller) => Expanded(
-            child: ListView.builder(
-              itemCount: controller.witUsers.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.bottomSheet(vacationBottomsheet(
-                        user: controller.witUsers[index]));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: _buildUserInfoCard(
-                      ' بيانات الموظف ',
-                      {
-                        'employeeName': controller.witUsers[index].userUsername,
-                        'employeeEmail': controller.witUsers[index].departName,
-                        'employeePhone': controller.witUsers[index].jopName,
-                      },
-                    ),
-                  ),
-                );
-              },
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(' المستخدمين المنتظرين'),
+          bottom: TabBar(
+            tabs: [Tab(
+              child: Text('empoolyee'),
             ),
+            Tab(
+              child: Text('admin'),
+            ),]
           ),
         ),
+        body: TabBarView(children: [
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GetBuilder<HRUserControllerImp>(
+                init: HRUserControllerImp(), // قم بتهيئة الكنترولر هنا
+                builder: (controller) => Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.witUsers.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Get.bottomSheet(vacationBottomsheet(
+                              user: controller.witUsers[index]));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: _buildUserInfoCard(
+                            ' بيانات الموظف ',
+                            {
+                              'employeeName':
+                                  controller.witUsers[index].userUsername,
+                              'employeeEmail':
+                                  controller.witUsers[index].userEmail,
+                              'employeePhone': controller.witUsers[index].jopName,
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GetBuilder<HRUserControllerImp>(
+                init: HRUserControllerImp(), // قم بتهيئة الكنترولر هنا
+                builder: (controller) => Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.witAdmin.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Get.bottomSheet(vacationBottomsheet(
+                              user: controller.witAdmin[index]));
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: _buildUserInfoCard(
+                            ' بيانات الموظف ',
+                            {
+                              'employeeName':
+                                  controller.witAdmin[index].userUsername,
+                              'employeeEmail':
+                                  controller.witAdmin[index].userEmail,
+                              'employeePhone': controller.witAdmin[index].jopName,
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ]),
       ),
     );
   }
@@ -151,26 +202,26 @@ class vacationBottomsheet extends StatelessWidget {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
-                    child:CustomButton(
-                            height: getVerticalSize(58),
-                            text: "رفض",
-                            margin: getMargin(right: 6),
-                            variant: ButtonVariant.FillGray800,
-                            onTap: () {
-                              controller.rejectuser(user.userId);
-                              Get.back();
-                            }),
+                    child: CustomButton(
+                        height: getVerticalSize(58),
+                        text: "رفض",
+                        margin: getMargin(right: 6),
+                        variant: ButtonVariant.FillGray800,
+                        onTap: () {
+                          controller.rejectuser(user.userId);
+                        
+                        }),
                   ),
                   Expanded(
-                    child:  CustomButton(
-                            height: getVerticalSize(58),
-                            text: "قبول",
-                            margin: getMargin(left: 6),
-                            variant: ButtonVariant.OutlineGreenA7003f,
-                            onTap: () {
-                              controller.approvaluser(user.userId);
-                              Get.back();
-                            }),
+                    child: CustomButton(
+                        height: getVerticalSize(58),
+                        text: "قبول",
+                        margin: getMargin(left: 6),
+                        variant: ButtonVariant.OutlineGreenA7003f,
+                        onTap: () {
+                          controller.approvaluser(user.userId);
+                          
+                        }),
                   )
                 ]))
           ],

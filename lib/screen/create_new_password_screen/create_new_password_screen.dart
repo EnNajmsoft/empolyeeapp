@@ -8,15 +8,12 @@ import 'package:empolyeeapp/widgets/custom_button.dart';
 import 'package:empolyeeapp/widgets/custom_checkbox.dart';
 import 'package:empolyeeapp/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
-import 'package:empolyeeapp/screen/reset_password_successful_dialog/reset_password_successful_dialog.dart';
 import 'package:get/get.dart';
-// ignore_for_file: must_be_immutable
 
-// ignore_for_file: must_be_immutable
-
-// ignore_for_file: must_be_immutable
 class CreateNewPasswordScreen extends StatelessWidget {
   ResetPasswordControllerImp controller = Get.put(ResetPasswordControllerImp());
+
+  CreateNewPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

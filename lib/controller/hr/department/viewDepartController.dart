@@ -13,6 +13,7 @@ abstract class VeiwDepartcontroller extends GetxController {
 }
 
 class VeiwDepartcontrollerImp extends VeiwDepartcontroller {
+  
   DepartementData departementdata = DepartementData(Get.find());
   List<DepartementModel> departements = [];
 

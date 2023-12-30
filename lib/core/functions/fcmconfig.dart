@@ -1,10 +1,11 @@
 import 'package:empolyeeapp/controller/empolyee/vacation/viewcontrooler.dart';
+import 'package:empolyeeapp/controller/hr/vacations/empvacatcontroller.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 
 requestPermissionNotification() async {
-  NotificationSettings settings =
+
       await FirebaseMessaging.instance.requestPermission(
     alert: true,
     announcement: false,
@@ -41,8 +42,12 @@ refreshPageNotification(data) {
     EmpusercontrollerImp controller = Get.find();
     controller.refrehVacation();
   }
+  if (Get.currentRoute == "/Empvacationview" &&
+      data['pagename'] == "Empvacationview") {
+    EmpvacatcontrollerImp controller = Get.find();
+    controller.refrehHRVacation();
+  }
 }
-
 
 // Firebase + stream 
 // Socket io 
